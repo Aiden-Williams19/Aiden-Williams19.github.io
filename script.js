@@ -1,16 +1,21 @@
 /* ── Theme toggle ── */
 const tbtn = document.getElementById('tbtn');
 const root = document.documentElement;
-let dark = true;
+let dark = localStorage.getItem('theme') !== 'light';
+root.setAttribute('data-theme', dark ? 'dark' : 'light');
+tbtn.textContent = dark ? '🌙' : '☀️';
+
 tbtn.addEventListener('click', () => {
   dark = !dark;
   root.setAttribute('data-theme', dark ? 'dark' : 'light');
   tbtn.textContent = dark ? '🌙' : '☀️';
+  localStorage.setItem('theme', dark ? 'dark' : 'light');
 });
 
 /* ── Cursor glow (pointer devices only) ── */
 const cg = document.getElementById('cglow');
-if (window.matchMedia('(pointer:fine)').matches) {
+const isPointerFine = window.matchMedia('(pointer:fine)').matches;
+if (isPointerFine) {
   document.addEventListener('mousemove', e => {
     cg.style.opacity = '1';
     cg.style.left = e.clientX + 'px';
@@ -18,6 +23,18 @@ if (window.matchMedia('(pointer:fine)').matches) {
   });
   document.addEventListener('mouseleave', () => cg.style.opacity = '0');
 }
+
+/* ── Mobile menu smooth scroll ── */
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    const href = this.getAttribute('href');
+    if (href !== '#' && document.querySelector(href)) {
+      e.preventDefault();
+      const target = document.querySelector(href);
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
 
 /* ── Scroll-reveal exp cards ── */
 const io = new IntersectionObserver(entries => {
@@ -43,3 +60,10 @@ const nio = new IntersectionObserver(entries => {
   });
 }, { rootMargin: '-40% 0px -55% 0px' });
 secs.forEach(s => nio.observe(s));
+
+/* ── Prevent layout shift on touch ── */
+if ('ontouchstart' in window) {
+  document.addEventListener('touchstart', function() {
+    // Enable faster tap response on mobile
+  }, false);
+}
