@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Aiden Williams — Junior Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Epilogue:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+/* ─────────────────────────────────────────
+   TOKENS
+───────────────────────────────────────── */
+:root {
+  --ease: cubic-bezier(0.22,1,0.36,1);
+  --spring: cubic-bezier(0.34,1.56,0.64,1);
+  --green: #00e87a;
+  --green-dim: rgba(0,232,122,.10);
+  --green-glow: rgba(0,232,122,.18);
+  --blue: #4f8cff;
+  --r: 12px;
+}
+[data-theme="dark"] {
+  --bg:       #080c0f;
+  --bg2:      #0f1419;
+  --surface:  #151c23;
+  --card:     #1a2330;
+  --cardh:    #1f2b3a;
+  --border:   rgba(255,255,255,.06);
+  --bhi:      rgba(0,232,122,.28);
+  --text:     #eef2f7;
+  --t2:       #8899aa;
+  --t3:       #3d5166;
+  --glass:    rgba(8,12,15,.82);
+  --shadow:   0 24px 64px rgba(0,0,0,.55);
+}
+[data-theme="light"] {
+  --bg:       #f3f5f8;
+  --bg2:      #eaecf0;
+  --surface:  #ffffff;
+  --card:     #ffffff;
+  --cardh:    #f7f9fc;
+  --border:   rgba(0,0,0,.07);
+  --bhi:      rgba(0,176,90,.38);
+  --text:     #0c111a;
+  --t2:       #4a5568;
+  --t3:       #94a3b8;
+  --glass:    rgba(243,245,248,.88);
+  --shadow:   0 24px 64px rgba(0,0,0,.09);
+  --green: #00b85e;
+  --green-dim: rgba(0,184,94,.10);
+  --green-glow: rgba(0,184,94,.14);
+}
+
+/* ─────────────────────────────────────────
+   RESET
+───────────────────────────────────────── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'Epilogue',sans-serif;
+  font-size:16px;line-height:1.65;
+  overflow-x:hidden;
+  transition:background .4s var(--ease),color .4s var(--ease);
+}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+
+/* grain */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.032'/%3E%3C/svg%3E");
+  opacity:.5;
+}
+
+/* cursor glow */
+#cglow{
+  position:fixed;width:480px;height:480px;border-radius:50%;
+  pointer-events:none;z-index:1;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(circle,var(--green-glow) 0%,transparent 65%);
+  transition:opacity .3s;opacity:0;
+}
+
+/* ─────────────────────────────────────────
+   NAV
+───────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  height:64px;display:flex;align-items:center;
+  padding:0 clamp(1.2rem,5vw,4rem);
+  background:var(--glass);
+  backdrop-filter:blur(24px) saturate(160%);
+  -webkit-backdrop-filter:blur(24px) saturate(160%);
+  border-bottom:1px solid var(--border);
+  transition:background .4s var(--ease);
+  gap:1rem;
+}
+.nav-logo{
+  font-family:'Cabinet Grotesk',sans-serif;
+  font-weight:900;font-size:1.1rem;letter-spacing:-.03em;
+  margin-right:auto;display:flex;align-items:center;gap:6px;
+}
+.logo-acc{color:var(--green);}
+
+.navpill{
+  display:flex;gap:2px;list-style:none;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:999px;padding:4px;
+}
+.navpill a{
+  display:block;padding:.3rem 1rem;
+  font-size:.78rem;font-weight:500;
+  color:var(--t2);border-radius:999px;
+  transition:all .18s;
+}
+.navpill a:hover,.navpill a.on{background:var(--green);color:#000;}
+
+.tbtn{
+  width:36px;height:36px;border-radius:50%;
+  border:1px solid var(--border);background:var(--surface);
+  color:var(--text);font-size:.95rem;
+  display:grid;place-items:center;
+  transition:all .2s;
+}
+.tbtn:hover{border-color:var(--bhi);transform:rotate(18deg);}
+
+.hire{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:.38rem 1.1rem;
+  background:var(--green);color:#000;
+  font-size:.78rem;font-weight:700;
+  border-radius:999px;transition:all .2s;
+}
+.hire:hover{opacity:.85;transform:translateY(-1px);}
+
+/* ─────────────────────────────────────────
+   HERO
+───────────────────────────────────────── */
+.hero{
+  min-height:100svh;
+  display:grid;place-items:center;
+  padding:100px clamp(1.2rem,5vw,4rem) 60px;
+  position:relative;overflow:hidden;
+}
+
+/* grid lines */
+.hgrid{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(var(--border) 1px,transparent 1px),
+    linear-gradient(90deg,var(--border) 1px,transparent 1px);
+  background-size:56px 56px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,#000 20%,transparent 100%);
+}
+
+/* orbs */
+.orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(100px);}
+.o1{width:720px;height:720px;
+  background:radial-gradient(circle,rgba(0,232,122,.07),transparent 70%);
+  top:-180px;right:-120px;animation:fl1 18s ease-in-out infinite;}
+.o2{width:480px;height:480px;
+  background:radial-gradient(circle,rgba(79,140,255,.06),transparent 70%);
+  bottom:-80px;left:-60px;animation:fl2 22s ease-in-out infinite;}
+
+.hero-inner{
+  position:relative;z-index:2;
+  max-width:900px;text-align:center;
+}
+
+.hpill{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:5px 16px 5px 8px;
+  background:var(--surface);
+  border:1px solid var(--bhi);
+  border-radius:999px;
+  font-size:.78rem;font-weight:500;color:var(--t2);
+  margin-bottom:2.5rem;
+  animation:up .6s var(--ease) .1s both;
+}
+.pdot{
+  width:22px;height:22px;border-radius:50%;
+  background:var(--green-dim);border:1px solid var(--bhi);
+  display:grid;place-items:center;
+}
+.pinner{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--green);animation:breathe 2.4s ease infinite;
+}
+.ploc{color:var(--green);font-weight:600;}
+
+h1{
+  font-family:'Cabinet Grotesk',sans-serif;
+  font-weight:900;
+  font-size:clamp(4rem,11vw,9.5rem);
+  letter-spacing:-.05em;line-height:.88;
+  margin-bottom:2rem;
+  animation:up .6s var(--ease) .2s both;
+}
+h1 .ghost{
+  display:block;
+  -webkit-text-stroke:1.5px var(--t3);
+  -webkit-text-fill-color:transparent;
+  color:transparent;
+  transition:-webkit-text-stroke .4s;
+}
+[data-theme="light"] h1 .ghost{-webkit-text-stroke:1.5px var(--t2);}
+h1 .acc{-webkit-text-fill-color:var(--green);-webkit-text-stroke:0;color:var(--green);}
+
+.hsub{
+  font-size:1.05rem;font-weight:300;color:var(--t2);
+  max-width:500px;margin:0 auto 3rem;line-height:1.82;
+  animation:up .6s var(--ease) .3s both;
+}
+
+.hbtns{
+  display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;
+  margin-bottom:4rem;animation:up .6s var(--ease) .4s both;
+}
+.btn{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:.72rem 1.7rem;font-family:inherit;
+  font-size:.88rem;font-weight:600;border-radius:999px;
+  border:none;cursor:pointer;transition:all .2s var(--ease);
+  white-space:nowrap;
+}
+.bprimary{background:var(--green);color:#000;}
+.bprimary:hover{transform:translateY(-2px);box-shadow:0 10px 30px var(--green-glow);}
+.bsecond{background:transparent;color:var(--text);border:1.5px solid var(--border);}
+.bsecond:hover{border-color:var(--bhi);color:var(--green);transform:translateY(-2px);}
+
+.hstats{
+  display:flex;justify-content:center;
+  gap:clamp(2rem,5vw,5rem);
+  padding-top:2rem;border-top:1px solid var(--border);
+  animation:up .6s var(--ease) .5s both;
+}
+.snum{
+  font-family:'Cabinet Grotesk',sans-serif;
+  font-size:2.5rem;font-weight:900;
+  letter-spacing:-.05em;color:var(--text);line-height:1;
+  margin-bottom:5px;
+}
+.snum em{font-style:normal;color:var(--green);}
+.slbl{font-size:.72rem;color:var(--t3);letter-spacing:.07em;text-transform:uppercase;}
+
+.sarrow{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  color:var(--t3);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+  animation:up 1s var(--ease) 1s both;
+}
+.aline{
+  width:1px;height:48px;
+  background:linear-gradient(to bottom,var(--green),transparent);
+  animation:drip 2.2s ease-in-out infinite;
+}
+
+/* ─────────────────────────────────────────
+   SECTIONS
+───────────────────────────────────────── */
+.sec{padding:clamp(4rem,8vw,8rem) clamp(1.2rem,5vw,4rem);}
+.sec-alt{background:var(--bg2);}
+.sec-center{text-align:center;}
+
+.eye{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--green);margin-bottom:1rem;
+}
+.eye::before{content:'';width:20px;height:2px;background:var(--green);border-radius:2px;}
+
+.stitle{
+  font-family:'Cabinet Grotesk',sans-serif;
+  font-weight:900;
+  font-size:clamp(2.2rem,4.5vw,3.8rem);
+  letter-spacing:-.04em;line-height:1.02;
+  margin-bottom:1.1rem;
+}
+.sbody{
+  font-size:1rem;color:var(--t2);
+  max-width:480px;line-height:1.82;
+  margin-bottom:3.5rem;
+}
+
+/* ─────────────────────────────────────────
+   ABOUT
+───────────────────────────────────────── */
+.awrap{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:5rem;max-width:1100px;align-items:start;
+}
+.acopy{color:var(--t2);line-height:1.88;}
+.acopy p+p{margin-top:1.1rem;}
+.acopy strong{color:var(--text);font-weight:600;}
+
+.sklbl{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);margin-bottom:.8rem;}
+.skcloud{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:2rem;}
+.sk{
+  padding:.38rem .9rem;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:999px;font-size:.8rem;font-weight:500;
+  color:var(--t2);transition:all .2s;
+}
+.sk:hover{border-color:var(--bhi);color:var(--green);background:var(--green-dim);}
+
+.certbox{
+  display:flex;align-items:center;gap:1rem;
+  padding:1.1rem 1.25rem;
+  background:var(--surface);border:1px solid var(--border);
+  border-left:3px solid var(--green);border-radius:var(--r);
+  margin-top:1.5rem;
+}
+.cico{font-size:1.8rem;}
+.ctitle{font-weight:700;font-size:.9rem;line-height:1.3;}
+.csub{font-size:.74rem;color:var(--t3);margin-top:3px;}
+
+/* ─────────────────────────────────────────
+   EXPERIENCE
+───────────────────────────────────────── */
+.expgrid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1.25rem;max-width:1000px;
+}
+.ecard{
+  padding:1.6rem;background:var(--card);
+  border:1px solid var(--border);border-radius:var(--r);
+  transition:all .3s var(--ease);
+  opacity:0;transform:translateY(22px);
+}
+.ecard.vis{opacity:1;transform:translateY(0);}
+.ecard:hover{border-color:var(--bhi);background:var(--cardh);box-shadow:var(--shadow);}
+
+.edate{
+  display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.1em;
+  color:var(--green);background:var(--green-dim);
+  border:1px solid var(--bhi);padding:3px 10px;border-radius:999px;margin-bottom:.9rem;
+}
+.erole{
+  font-family:'Cabinet Grotesk',sans-serif;
+  font-size:1.1rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.2rem;
+}
+.eco{font-size:.8rem;color:var(--t3);margin-bottom:.75rem;}
+.edesc{font-size:.86rem;color:var(--t2);line-height:1.72;}
+
+/* ─────────────────────────────────────────
+   PROJECTS
+───────────────────────────────────────── */
+.pgrid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:1.5rem;max-width:1100px;
+}
+
+.pcard{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;overflow:hidden;
+  display:flex;flex-direction:column;
+  transition:all .35s var(--ease);position:relative;
+}
+.pcard:hover{
+  border-color:var(--bhi);
+  transform:translateY(-7px);
+  box-shadow:var(--shadow),0 0 40px var(--green-glow);
+}
+.pcard::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--green),var(--blue));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .4s var(--ease);
+}
+.pcard:hover::after{transform:scaleX(1);}
+
+.pprev{
+  height:200px;display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;flex-shrink:0;
+}
+.pbg{position:absolute;inset:0;}
+.ptxt{
+  position:absolute;
+  font-family:'Cabinet Grotesk',sans-serif;
+  font-size:5.5rem;font-weight:900;letter-spacing:-.06em;
+  opacity:.07;white-space:nowrap;color:var(--text);user-select:none;
+}
+.pemo{
+  font-size:3rem;position:relative;z-index:1;
+  filter:drop-shadow(0 4px 20px rgba(0,0,0,.35));
+  transition:transform .3s var(--spring);
+}
+.pcard:hover .pemo{transform:scale(1.2) rotate(-5deg);}
+
+.livebadge{
+  position:absolute;top:12px;right:12px;
+  display:inline-flex;align-items:center;gap:5px;
+  padding:4px 10px;
+  background:rgba(0,232,122,.15);border:1px solid rgba(0,232,122,.35);
+  border-radius:999px;font-size:.67rem;font-weight:700;
+  color:var(--green);letter-spacing:.06em;text-transform:uppercase;z-index:2;
+}
+.ldot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:breathe 1.8s ease infinite;}
+
+.pbody{padding:1.4rem;flex:1;display:flex;flex-direction:column;}
+.pname{
+  font-family:'Cabinet Grotesk',sans-serif;
+  font-size:1.1rem;font-weight:800;letter-spacing:-.025em;margin-bottom:.4rem;
+}
+.pdesc{font-size:.85rem;color:var(--t2);line-height:1.7;flex:1;margin-bottom:1.1rem;}
+
+.pfooter{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;}
+.tag{
+  padding:3px 9px;border:1px solid var(--border);
+  border-radius:999px;font-size:.7rem;font-weight:600;color:var(--t3);
+}
+.plinks{margin-left:auto;display:flex;gap:.4rem;}
+.ibtn{
+  width:32px;height:32px;border-radius:8px;
+  border:1px solid var(--border);background:transparent;
+  color:var(--t2);font-size:.85rem;
+  display:grid;place-items:center;
+  transition:all .2s;text-decoration:none;cursor:pointer;
+}
+.ibtn:hover{border-color:var(--bhi);color:var(--green);background:var(--green-dim);}
+
+/* ─────────────────────────────────────────
+   CONTACT
+───────────────────────────────────────── */
+.ctouter{max-width:740px;margin:0 auto;}
+.ctcard{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:clamp(1.8rem,4vw,3.5rem);
+  position:relative;overflow:hidden;
+}
+.ctcard::before{
+  content:'';position:absolute;top:-80px;right:-80px;
+  width:280px;height:280px;border-radius:50%;
+  background:radial-gradient(circle,var(--green-glow),transparent 70%);
+  pointer-events:none;
+}
+.ctintro{font-size:.95rem;color:var(--t2);line-height:1.8;max-width:500px;margin-bottom:2rem;}
+
+.ctgrid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;}
+.cl{
+  display:flex;align-items:center;gap:.85rem;
+  padding:.9rem 1.1rem;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);font-size:.84rem;font-weight:500;color:var(--text);
+  transition:all .22s var(--ease);
+}
+.cl:hover{border-color:var(--bhi);color:var(--green);transform:translateX(4px);}
+.clico{
+  width:34px;height:34px;border-radius:8px;
+  background:var(--green-dim);border:1px solid var(--bhi);
+  display:grid;place-items:center;font-size:.95rem;flex-shrink:0;
+}
+.clmeta{display:flex;flex-direction:column;}
+.cllbl{font-size:.66rem;color:var(--t3);font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-bottom:1px;}
+.clval{font-size:.82rem;font-weight:500;}
+
+/* ─────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────── */
+footer{
+  padding:1.8rem clamp(1.2rem,5vw,4rem);
+  border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:.75rem;
+  font-size:.78rem;color:var(--t3);
+}
+.flogo{
+  font-family:'Cabinet Grotesk',sans-serif;
+  font-weight:900;font-size:.95rem;color:var(--text);letter-spacing:-.02em;
+}
+.flogo span{color:var(--green);}
+
+/* ─────────────────────────────────────────
+   KEYFRAMES
+───────────────────────────────────────── */
+@keyframes up{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+@keyframes breathe{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.45;transform:scale(.82);}}
+@keyframes fl1{0%,100%{transform:translate(0,0);}33%{transform:translate(-30px,30px);}66%{transform:translate(20px,-25px);}}
+@keyframes fl2{0%,100%{transform:translate(0,0);}50%{transform:translate(30px,-28px);}}
+@keyframes drip{0%{opacity:0;transform:scaleY(0);transform-origin:top;}50%{opacity:1;}100%{opacity:0;transform:scaleY(1);transform-origin:top;}}
+
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
+@media(max-width:900px){
+  .awrap{grid-template-columns:1fr;gap:2.5rem;}
+  .expgrid{grid-template-columns:1fr;}
+  .pgrid{grid-template-columns:1fr;}
+  .ctgrid{grid-template-columns:1fr;}
+}
+@media(max-width:620px){
+  .navpill{display:none;}
+  h1{font-size:clamp(3.2rem,14vw,5.5rem);}
+  .hstats{gap:1.5rem;}
+  .snum{font-size:1.9rem;}
+  footer{justify-content:center;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<div id="cglow"></div>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <div class="nav-logo">
+    <span class="logo-acc">[</span>AW<span class="logo-acc">]</span>
+  </div>
+  <ul class="navpill">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="tbtn" id="tbtn" aria-label="Toggle theme">🌙</button>
+  <a href="mailto:aidenwilliams336@gmail.com" class="hire">Hire Me ↗</a>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero" id="home">
+  <div class="hgrid"></div>
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+
+  <div class="hero-inner">
+    <div class="hpill">
+      <div class="pdot"><div class="pinner"></div></div>
+      <span>Open to work &nbsp;·&nbsp;</span>
+      <span class="ploc">📍 Cape Town, ZA</span>
+    </div>
+
+    <h1>
+      Aiden<br>
+      <span class="ghost">Willi<span class="acc">am</span>s</span>
+    </h1>
+
+    <p class="hsub">
+      Junior Software Developer — building real products with HTML, CSS &amp; JavaScript.
+      CodeSpace graduate with Merit · Currently at Listsecure.
+    </p>
+
+    <div class="hbtns">
+      <a href="#projects" class="btn bprimary">View Projects ↓</a>
+      <a href="https://github.com/Aiden-Williams19" target="_blank" rel="noopener" class="btn bsecond">GitHub Profile ↗</a>
+    </div>
+
+    <div class="hstats">
+      <div>
+        <div class="snum">48<em>+</em></div>
+        <div class="slbl">Repositories</div>
+      </div>
+      <div>
+        <div class="snum">4</div>
+        <div class="slbl">Live Projects</div>
+      </div>
+      <div>
+        <div class="snum">2<em>+</em></div>
+        <div class="slbl">Yrs Experience</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sarrow">
+    <div class="aline"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- ══ ABOUT ══ -->
+<section class="sec sec-alt" id="about">
+  <div class="eye">About</div>
+  <h2 class="stitle">Committed.<br>Results-driven.</h2>
+  <div class="awrap">
+    <div class="acopy">
+      <p>I'm a <strong>Junior Software Developer</strong> based in Kensington, Cape Town. I completed a 12-month CodeSpace Software Development course <strong>with Merit</strong> in March 2025, and I'm currently working as a <strong>Junior Developer &amp; Systems Administrator</strong> at Listsecure — contributing to the platform and managing backend vendor operations.</p>
+      <p>I thrive under pressure, think independently, and bring genuine professionalism to every team. Before pivoting to tech, I spent two years at <strong>Old Mutual Direct Financial Advice</strong> — building skills in client communication, data management, and structured workflows that I carry into every project.</p>
+      <p>Always learning. Always building. Always looking for the next challenge to sharpen the craft.</p>
+    </div>
+    <div>
+      <p class="sklbl">Tech Stack</p>
+      <div class="skcloud">
+        <span class="sk">HTML5</span><span class="sk">CSS3</span>
+        <span class="sk">JavaScript</span><span class="sk">WordPress</span>
+        <span class="sk">Git &amp; GitHub</span><span class="sk">Cursor AI</span>
+        <span class="sk">Responsive Design</span><span class="sk">Systems Admin</span>
+      </div>
+      <p class="sklbl">Currently learning</p>
+      <div class="skcloud">
+        <span class="sk">React.js</span><span class="sk">Node.js</span><span class="sk">REST APIs</span>
+      </div>
+      <div class="certbox">
+        <div class="cico">🏅</div>
+        <div>
+          <div class="ctitle">Software Development — With Merit</div>
+          <div class="csub">CodeSpace Academy &nbsp;·&nbsp; March 2025 &nbsp;·&nbsp; CERT:1496</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ EXPERIENCE ══ -->
+<section class="sec" id="experience">
+  <div class="eye">Experience</div>
+  <h2 class="stitle">Where I've<br>been building.</h2>
+  <div class="expgrid">
+    <div class="ecard">
+      <div class="edate">2025 — Present</div>
+      <div class="erole">Junior Developer &amp; Systems Admin</div>
+      <div class="eco">Listsecure</div>
+      <div class="edesc">Contributed to building and iterating on the company website. Handles backend operations including approving and verifying vendors on the platform as Systems Administrator.</div>
+    </div>
+    <div class="ecard">
+      <div class="edate">2024 — 2025</div>
+      <div class="erole">Software Development — Merit</div>
+      <div class="eco">CodeSpace Academy</div>
+      <div class="edesc">12-month intensive part-time program covering HTML, CSS, JavaScript, REST APIs, version control with Git, and modern frontend development workflows.</div>
+    </div>
+    <div class="ecard">
+      <div class="edate">2024 — 2025</div>
+      <div class="erole">Lead Generation Specialist</div>
+      <div class="eco">Way Media</div>
+      <div class="edesc">Identified and generated qualified leads to grow client pipelines across the agency's media campaigns and outreach programs.</div>
+    </div>
+    <div class="ecard">
+      <div class="edate">2021 — 2023</div>
+      <div class="erole">Personal Assistant</div>
+      <div class="eco">Old Mutual Direct Financial Advice</div>
+      <div class="edesc">Captured sales on XPLAN and Front Office, tracked new business cases on MyClient, and managed Annual Review communications with customers.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROJECTS ══ -->
+<section class="sec sec-alt" id="projects">
+  <div class="eye">Projects</div>
+  <h2 class="stitle">Things I've<br>shipped.</h2>
+  <p class="sbody">Real-world client and personal projects — from event staffing platforms to community sites.</p>
+
+  <div class="pgrid">
+
+    <!-- EventCore -->
+    <div class="pcard">
+      <div class="pprev" style="background:linear-gradient(140deg,#04111d 0%,#071d30 100%);">
+        <div class="pbg" style="background:radial-gradient(circle at 35% 60%,rgba(0,232,122,.13),transparent 55%);"></div>
+        <div class="ptxt">EVCORE</div>
+        <div class="pemo">🎪</div>
+        <div class="livebadge"><div class="ldot"></div>Live</div>
+      </div>
+      <div class="pbody">
+        <div class="pname">EventCore Solutions</div>
+        <div class="pdesc">Professional event staffing platform for South Africa. A fully live production web app connecting staffing solutions with event organisers. Built and maintained end-to-end.</div>
+        <div class="pfooter">
+          <span class="tag">JavaScript</span>
+          <span class="tag">React</span>
+          <span class="tag">CSS</span>
+          <div class="plinks">
+            <a href="https://eventcoresolutions.co.za" target="_blank" rel="noopener" class="ibtn" title="View live site">🌐</a>
+            <a href="https://github.com/Aiden-Williams19/eventcore" target="_blank" rel="noopener" class="ibtn" title="View on GitHub">⌥</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Jefe -->
+    <div class="pcard">
+      <div class="pprev" style="background:linear-gradient(140deg,#120c03 0%,#221504 100%);">
+        <div class="pbg" style="background:radial-gradient(circle at 70% 35%,rgba(255,185,0,.09),transparent 55%);"></div>
+        <div class="ptxt">JEFE</div>
+        <div class="pemo">👔</div>
+      </div>
+      <div class="pbody">
+        <div class="pname">Jefe Website</div>
+        <div class="pdesc">A polished brand website for Jefe. Clean, modern layout showcasing products and services with full responsive design across all screen sizes.</div>
+        <div class="pfooter">
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">JavaScript</span>
+          <div class="plinks">
+            <a href="https://github.com/Aiden-Williams19/jefe-website" target="_blank" rel="noopener" class="ibtn" title="View on GitHub">⌥</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- For My Brothers -->
+    <div class="pcard">
+      <div class="pprev" style="background:linear-gradient(140deg,#050f07 0%,#091608 100%);">
+        <div class="pbg" style="background:radial-gradient(circle at 50% 50%,rgba(0,232,122,.10),transparent 60%);"></div>
+        <div class="ptxt">FMB</div>
+        <div class="pemo">🤝</div>
+      </div>
+      <div class="pbody">
+        <div class="pname">For My Brothers</div>
+        <div class="pdesc">A community-driven web project built to connect and support a network. Clean digital platform with purposeful structure and a strong sense of identity.</div>
+        <div class="pfooter">
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">JavaScript</span>
+          <div class="plinks">
+            <a href="https://github.com/Aiden-Williams19/formybrothers" target="_blank" rel="noopener" class="ibtn" title="View on GitHub">⌥</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Specialized Property Core -->
+    <div class="pcard">
+      <div class="pprev" style="background:linear-gradient(140deg,#080818 0%,#0d0d2a 100%);">
+        <div class="pbg" style="background:radial-gradient(circle at 30% 65%,rgba(79,140,255,.11),transparent 55%);"></div>
+        <div class="ptxt">SPC</div>
+        <div class="pemo">🏢</div>
+      </div>
+      <div class="pbody">
+        <div class="pname">Specialized Property Core</div>
+        <div class="pdesc">A professional property solutions platform. Structured layout built to present real estate services with trust, clarity, and a polished client-facing design.</div>
+        <div class="pfooter">
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">JavaScript</span>
+          <div class="plinks">
+            <a href="https://github.com/Aiden-Williams19/specialized-property-core" target="_blank" rel="noopener" class="ibtn" title="View on GitHub">⌥</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="margin-top:2.5rem;">
+    <a href="https://github.com/Aiden-Williams19?tab=repositories" target="_blank" rel="noopener" class="btn bsecond">
+      Browse all 48 repos on GitHub ↗
+    </a>
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section class="sec sec-center" id="contact">
+  <div class="eye" style="justify-content:center;">Contact</div>
+  <h2 class="stitle">Let's build<br>something great.</h2>
+  <p class="sbody" style="margin:0 auto 3rem;">Open to junior dev roles, freelance work, and collaborations. Cape Town based — happy to go remote.</p>
+
+  <div class="ctouter">
+    <div class="ctcard">
+      <p class="ctintro">I respond within 24 hours. Whether it's a full-time role, a freelance project, or just a conversation — get in touch on any channel below.</p>
+      <div class="ctgrid">
+        <a href="mailto:aidenwilliams336@gmail.com" class="cl">
+          <div class="clico">✉</div>
+          <div class="clmeta">
+            <span class="cllbl">Email</span>
+            <span class="clval">aidenwilliams336@gmail.com</span>
+          </div>
+        </a>
+        <a href="tel:+27672089491" class="cl">
+          <div class="clico">📞</div>
+          <div class="clmeta">
+            <span class="cllbl">Phone</span>
+            <span class="clval">067 208 9491</span>
+          </div>
+        </a>
+        <a href="https://github.com/Aiden-Williams19" target="_blank" rel="noopener" class="cl">
+          <div class="clico" style="font-size:.8rem;font-weight:900;font-family:'Cabinet Grotesk',sans-serif;">GH</div>
+          <div class="clmeta">
+            <span class="cllbl">GitHub</span>
+            <span class="clval">Aiden-Williams19</span>
+          </div>
+        </a>
+        <a href="https://www.linkedin.com/in/aiden-williams-739660377" target="_blank" rel="noopener" class="cl">
+          <div class="clico" style="font-size:.85rem;font-weight:800;font-family:'Cabinet Grotesk',sans-serif;">in</div>
+          <div class="clmeta">
+            <span class="cllbl">LinkedIn</span>
+            <span class="clval">Aiden Williams</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="flogo">[AW<span>.</span>dev]</div>
+  <span>Aiden Williams · Junior Developer · Cape Town 🇿🇦</span>
+  <span>© 2026 — Built with HTML, CSS &amp; JS</span>
+</footer>
+
+<script>
+/* ── Theme toggle ── */
+const tbtn = document.getElementById('tbtn');
+const root = document.documentElement;
+let dark = true;
+tbtn.addEventListener('click', () => {
+  dark = !dark;
+  root.setAttribute('data-theme', dark ? 'dark' : 'light');
+  tbtn.textContent = dark ? '🌙' : '☀️';
+});
+
+/* ── Cursor glow (pointer devices only) ── */
+const cg = document.getElementById('cglow');
+if (window.matchMedia('(pointer:fine)').matches) {
+  document.addEventListener('mousemove', e => {
+    cg.style.opacity = '1';
+    cg.style.left = e.clientX + 'px';
+    cg.style.top  = e.clientY + 'px';
+  });
+  document.addEventListener('mouseleave', () => cg.style.opacity = '0');
+}
+
+/* ── Scroll-reveal exp cards ── */
+const io = new IntersectionObserver(entries => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('vis'), i * 110);
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.ecard').forEach(el => io.observe(el));
+
+/* ── Active nav highlight ── */
+const secs = document.querySelectorAll('section[id]');
+const nls  = document.querySelectorAll('.navpill a');
+const nio  = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      nls.forEach(a => a.classList.remove('on'));
+      const a = document.querySelector(`.navpill a[href="#${e.target.id}"]`);
+      if (a) a.classList.add('on');
+    }
+  });
+}, { rootMargin: '-40% 0px -55% 0px' });
+secs.forEach(s => nio.observe(s));
+</script>
+</body>
+</html>
