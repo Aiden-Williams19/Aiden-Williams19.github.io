@@ -1,301 +1,1304 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Aiden Williams — Junior Developer</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Epilogue:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="styles.css"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aiden Williams — Junior Developer</title>
+  <meta name="description" content="Junior Software Developer based in Cape Town, ZA. Building clean, purposeful web experiences." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Epilogue:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       1. DESIGN TOKENS
+    ============================================================ */
+    :root {
+      /* Spacing scale — 8px base */
+      --sp-1:  8px;
+      --sp-2:  16px;
+      --sp-3:  24px;
+      --sp-4:  32px;
+      --sp-5:  40px;
+      --sp-6:  48px;
+      --sp-8:  64px;
+      --sp-10: 80px;
+      --sp-12: 96px;
+
+      /* Layout */
+      --max-w: 1160px;
+      --nav-h: 64px;
+      --radius: 12px;
+      --radius-lg: 20px;
+
+      /* Palette */
+      --green:      #00e87a;
+      --green-dim:  rgba(0, 232, 122, 0.10);
+      --green-glow: rgba(0, 232, 122, 0.20);
+      --blue:       #4f8cff;
+
+      /* Easing */
+      --ease:   cubic-bezier(0.22, 1, 0.36, 1);
+      --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Dark theme */
+    [data-theme="dark"] {
+      --bg:       #080c0f;
+      --bg-alt:   #0d1318;
+      --surface:  #111920;
+      --card:     #141e27;
+      --card-h:   #1a2634;
+      --border:   rgba(255, 255, 255, 0.07);
+      --bhi:      rgba(0, 232, 122, 0.28);
+      --text:     #edf2f7;
+      --t2:       #7a8fa0;
+      --t3:       #364a5c;
+      --glass:    rgba(8, 12, 15, 0.85);
+      --shadow:   0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Light theme */
+    [data-theme="light"] {
+      --bg:       #f4f6f9;
+      --bg-alt:   #eaecf0;
+      --surface:  #ffffff;
+      --card:     #ffffff;
+      --card-h:   #f7f9fc;
+      --border:   rgba(0, 0, 0, 0.08);
+      --bhi:      rgba(0, 170, 90, 0.35);
+      --text:     #0c111a;
+      --t2:       #4a5568;
+      --t3:       #94a3b8;
+      --glass:    rgba(244, 246, 249, 0.90);
+      --shadow:   0 20px 60px rgba(0, 0, 0, 0.08);
+      --green:      #00a854;
+      --green-dim:  rgba(0, 168, 84, 0.10);
+      --green-glow: rgba(0, 168, 84, 0.16);
+    }
+
+    /* ============================================================
+       2. RESET
+    ============================================================ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Epilogue', sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      overflow-x: hidden;
+      transition: background 0.35s var(--ease), color 0.35s var(--ease);
+    }
+
+    a  { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+    /* Subtle grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9000;
+      opacity: 0.4;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    }
+
+    /* ============================================================
+       3. LAYOUT UTILITY — centred container
+    ============================================================ */
+    .container {
+      width: 100%;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--sp-4);
+    }
+
+    /* ============================================================
+       4. NAVBAR
+    ============================================================ */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 500;
+      height: var(--nav-h);
+      background: var(--glass);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.35s var(--ease);
+    }
+
+    .navbar__inner {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      gap: var(--sp-2);
+    }
+
+    .navbar__logo {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-weight: 900;
+      font-size: 1.1rem;
+      letter-spacing: -0.03em;
+      margin-right: auto;
+      flex-shrink: 0;
+    }
+    .navbar__logo span { color: var(--green); }
+
+    .navbar__links {
+      display: flex;
+      list-style: none;
+      gap: 2px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 4px;
+    }
+    .navbar__links a {
+      display: block;
+      padding: 6px 16px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--t2);
+      border-radius: 999px;
+      transition: background 0.18s, color 0.18s;
+      white-space: nowrap;
+    }
+    .navbar__links a:hover,
+    .navbar__links a.active {
+      background: var(--green);
+      color: #000;
+    }
+
+    .navbar__theme {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 0.95rem;
+      display: grid;
+      place-items: center;
+      transition: border-color 0.2s, transform 0.3s;
+      flex-shrink: 0;
+    }
+    .navbar__theme:hover { border-color: var(--bhi); transform: rotate(20deg); }
+
+    .navbar__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 8px 18px;
+      background: var(--green);
+      color: #000;
+      font-size: 0.78rem;
+      font-weight: 700;
+      border-radius: 999px;
+      transition: opacity 0.2s, transform 0.2s;
+      flex-shrink: 0;
+    }
+    .navbar__cta:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    /* ============================================================
+       5. HERO — fixed centred layout, no large gaps
+    ============================================================ */
+    .hero {
+      /* 
+        FIX: Use flex column + min-height instead of grid place-items:center.
+        This prevents the grid cell from expanding to full viewport height
+        and pushing content to the middle of a sea of whitespace.
+        The content centres itself naturally via margin: auto in the flex child.
+      */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100svh;
+      padding-top: var(--nav-h);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Background decorations — purely visual, non-layout */
+    .hero__grid {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, #000 20%, transparent 100%);
+    }
+
+    .hero__orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(100px);
+    }
+    .hero__orb--1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,232,122,0.07), transparent 70%);
+      top: -150px; right: -100px;
+      animation: float1 18s ease-in-out infinite;
+    }
+    .hero__orb--2 {
+      width: 420px; height: 420px;
+      background: radial-gradient(circle, rgba(79,140,255,0.06), transparent 70%);
+      bottom: -80px; left: -60px;
+      animation: float2 22s ease-in-out infinite;
+    }
+
+    /* 
+      FIX: The hero content is a regular block inside a flex container.
+      max-width + margin:auto centres it. padding gives breathing room.
+      No grid tricks, no place-items — clean and predictable at every width.
+    */
+    .hero__content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: var(--sp-8) var(--sp-4) var(--sp-10);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 5px 16px 5px 8px;
+      background: var(--surface);
+      border: 1px solid var(--bhi);
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--t2);
+      margin-bottom: var(--sp-5);
+      animation: fadeUp 0.55s var(--ease) 0.1s both;
+    }
+    .hero__badge-dot {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--green-dim);
+      border: 1px solid var(--bhi);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .hero__badge-dot-inner {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: breathe 2.4s ease infinite;
+    }
+    .hero__badge-loc { color: var(--green); font-weight: 600; }
+
+    .hero__heading {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-weight: 900;
+      /* 
+        FIX: clamp now tops out at 7.5rem (was 9.5rem).
+        At 9.5rem on a 1280px screen the heading took up ~200px of height
+        contributing to perceived "empty space" around it.
+        7.5rem is still punchy but doesn't eat the viewport.
+      */
+      font-size: clamp(3.5rem, 9vw, 7.5rem);
+      letter-spacing: -0.05em;
+      line-height: 0.92;
+      margin-bottom: var(--sp-4);
+      animation: fadeUp 0.55s var(--ease) 0.2s both;
+    }
+    .hero__heading .ghost {
+      display: block;
+      -webkit-text-stroke: 1.5px var(--t3);
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      transition: -webkit-text-stroke 0.35s;
+    }
+    [data-theme="light"] .hero__heading .ghost { -webkit-text-stroke: 1.5px var(--t2); }
+    .hero__heading .accent {
+      -webkit-text-fill-color: var(--green);
+      -webkit-text-stroke: 0;
+      color: var(--green);
+    }
+
+    .hero__sub {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--t2);
+      max-width: 480px;
+      line-height: 1.8;
+      margin-bottom: var(--sp-5);
+      animation: fadeUp 0.55s var(--ease) 0.3s both;
+    }
+
+    .hero__buttons {
+      display: flex;
+      gap: var(--sp-2);
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: var(--sp-6);
+      animation: fadeUp 0.55s var(--ease) 0.4s both;
+    }
+
+    /* Shared button styles */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 12px 28px;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s var(--ease), box-shadow 0.2s, opacity 0.2s;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+    .btn--primary { background: var(--green); color: #000; }
+    .btn--primary:hover { transform: translateY(-2px); box-shadow: 0 10px 28px var(--green-glow); }
+    .btn--secondary { background: transparent; color: var(--text); border: 1.5px solid var(--border); }
+    .btn--secondary:hover { border-color: var(--bhi); color: var(--green); transform: translateY(-2px); }
+
+    .hero__stats {
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      justify-content: center;
+      gap: clamp(32px, 6vw, 64px);
+      padding-top: var(--sp-4);
+      border-top: 1px solid var(--border);
+      animation: fadeUp 0.55s var(--ease) 0.5s both;
+    }
+    .hero__stat { text-align: center; }
+    .hero__stat-num {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .hero__stat-num em { font-style: normal; color: var(--green); }
+    .hero__stat-lbl {
+      font-size: 0.7rem;
+      color: var(--t3);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero__scroll {
+      position: absolute;
+      bottom: var(--sp-3);
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: var(--t3);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      animation: fadeUp 1s var(--ease) 1s both;
+    }
+    .hero__scroll-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, var(--green), transparent);
+      animation: drip 2.2s ease-in-out infinite;
+    }
+
+    /* ============================================================
+       6. SECTION SHELL
+    ============================================================ */
+    .section {
+      padding: clamp(64px, 8vw, 112px) 0;
+    }
+    .section--alt { background: var(--bg-alt); }
+
+    /* 
+      FIX: Every section's content goes through .container.
+      This ensures a consistent max-width + horizontal padding
+      and prevents content from stretching to 100vw on large screens.
+    */
+    .section__header {
+      margin-bottom: var(--sp-8);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: var(--sp-2);
+    }
+    .eyebrow::before {
+      content: '';
+      width: 20px; height: 2px;
+      background: var(--green);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .section__title {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: var(--sp-2);
+    }
+
+    .section__body {
+      font-size: 1rem;
+      color: var(--t2);
+      max-width: 500px;
+      line-height: 1.8;
+    }
+
+    /* ============================================================
+       7. ABOUT
+    ============================================================ */
+    .about__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(40px, 5vw, 80px);
+      align-items: start;
+    }
+
+    .about__copy { color: var(--t2); line-height: 1.88; }
+    .about__copy p + p { margin-top: var(--sp-2); }
+    .about__copy strong { color: var(--text); font-weight: 600; }
+
+    .skills__label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--t3);
+      margin-bottom: var(--sp-1);
+    }
+    .skills__cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: var(--sp-3);
+    }
+    .skill-tag {
+      padding: 6px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--t2);
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .skill-tag:hover { border-color: var(--bhi); color: var(--green); background: var(--green-dim); }
+
+    .cert-card {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-2);
+      padding: var(--sp-2) var(--sp-3);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--green);
+      border-radius: var(--radius);
+    }
+    .cert-card__icon { font-size: 1.8rem; }
+    .cert-card__title { font-weight: 700; font-size: 0.9rem; line-height: 1.35; }
+    .cert-card__sub { font-size: 0.74rem; color: var(--t3); margin-top: 2px; }
+
+    /* ============================================================
+       8. EXPERIENCE
+    ============================================================ */
+    .exp__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-3);
+    }
+
+    .exp-card {
+      padding: var(--sp-3);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color 0.3s, background 0.3s, box-shadow 0.3s, transform 0.3s var(--ease);
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .exp-card.visible { opacity: 1; transform: translateY(0); }
+    .exp-card:hover {
+      border-color: var(--bhi);
+      background: var(--card-h);
+      box-shadow: var(--shadow);
+      transform: translateY(-3px);
+    }
+
+    .exp-card__date {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--green);
+      background: var(--green-dim);
+      border: 1px solid var(--bhi);
+      padding: 3px 10px;
+      border-radius: 999px;
+      margin-bottom: var(--sp-2);
+    }
+    .exp-card__role {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+    .exp-card__company { font-size: 0.8rem; color: var(--t3); margin-bottom: var(--sp-1); }
+    .exp-card__desc { font-size: 0.86rem; color: var(--t2); line-height: 1.72; }
+
+    /* ============================================================
+       9. PROJECTS — 3-col desktop, 2-col tablet, 1-col mobile
+    ============================================================ */
+    .projects__grid {
+      display: grid;
+      /*
+        FIX: auto-fill with minmax(280px, 1fr) gives us:
+        - 1 col on mobile (< 640px)
+        - 2 cols on tablet (640–1024px)
+        - 3 cols on desktop (1024px+)
+        No media query hacks needed — the grid responds naturally.
+      */
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--sp-3);
+    }
+
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: transform 0.32s var(--ease), border-color 0.32s, box-shadow 0.32s;
+    }
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--bhi);
+      box-shadow: var(--shadow), 0 0 32px var(--green-glow);
+    }
+
+    /* Animated top-border on hover */
+    .project-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--green), var(--blue));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.38s var(--ease);
+    }
+    .project-card:hover::after { transform: scaleX(1); }
+
+    .project-card__preview {
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .project-card__preview-label {
+      position: absolute;
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 4.5rem;
+      font-weight: 900;
+      letter-spacing: -0.06em;
+      opacity: 0.07;
+      white-space: nowrap;
+      color: var(--text);
+      user-select: none;
+    }
+    .project-card__emoji {
+      font-size: 2.6rem;
+      position: relative;
+      z-index: 1;
+      filter: drop-shadow(0 4px 16px rgba(0,0,0,0.3));
+      transition: transform 0.3s var(--spring);
+    }
+    .project-card:hover .project-card__emoji { transform: scale(1.18) rotate(-5deg); }
+
+    .project-card__live {
+      position: absolute;
+      top: 12px; right: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      background: rgba(0, 232, 122, 0.14);
+      border: 1px solid rgba(0, 232, 122, 0.35);
+      border-radius: 999px;
+      font-size: 0.67rem;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+    .project-card__live-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: breathe 1.8s ease infinite;
+    }
+
+    .project-card__body {
+      padding: var(--sp-3);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .project-card__name {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+    .project-card__desc {
+      font-size: 0.84rem;
+      color: var(--t2);
+      line-height: 1.7;
+      flex: 1;
+      margin-bottom: var(--sp-2);
+    }
+
+    .project-card__footer {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .tag {
+      padding: 3px 9px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--t3);
+    }
+    .project-card__links { margin-left: auto; display: flex; gap: 6px; }
+    .icon-btn {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--t2);
+      font-size: 0.85rem;
+      display: grid;
+      place-items: center;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .icon-btn:hover { border-color: var(--bhi); color: var(--green); background: var(--green-dim); }
+
+    .projects__more {
+      margin-top: var(--sp-6);
+      text-align: left;
+    }
+
+    /* ============================================================
+       10. CONTACT
+    ============================================================ */
+    .contact__card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: clamp(32px, 4vw, 56px);
+      max-width: 720px;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact__card::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 260px; height: 260px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--green-glow), transparent 70%);
+      pointer-events: none;
+    }
+
+    .contact__intro {
+      font-size: 0.95rem;
+      color: var(--t2);
+      line-height: 1.8;
+      max-width: 500px;
+      margin-bottom: var(--sp-4);
+    }
+
+    .contact__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-2);
+    }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-2);
+      padding: var(--sp-2) var(--sp-2);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 0.84rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+    .contact-link:hover { border-color: var(--bhi); color: var(--green); transform: translateX(4px); }
+    .contact-link__icon {
+      width: 34px; height: 34px;
+      border-radius: 8px;
+      background: var(--green-dim);
+      border: 1px solid var(--bhi);
+      display: grid;
+      place-items: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .contact-link__meta { display: flex; flex-direction: column; min-width: 0; }
+    .contact-link__label { font-size: 0.66rem; color: var(--t3); font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 1px; }
+    .contact-link__value { font-size: 0.82rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* ============================================================
+       11. FOOTER
+    ============================================================ */
+    .footer {
+      padding: var(--sp-4) 0;
+      border-top: 1px solid var(--border);
+    }
+    .footer__inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--sp-2);
+      font-size: 0.78rem;
+      color: var(--t3);
+    }
+    .footer__logo {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-weight: 900;
+      font-size: 0.95rem;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .footer__logo span { color: var(--green); }
+
+    /* ============================================================
+       12. KEYFRAMES
+    ============================================================ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes breathe {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.45; transform: scale(0.82); }
+    }
+    @keyframes float1 {
+      0%, 100% { transform: translate(0, 0); }
+      33%       { transform: translate(-24px, 28px); }
+      66%       { transform: translate(18px, -22px); }
+    }
+    @keyframes float2 {
+      0%, 100% { transform: translate(0, 0); }
+      50%       { transform: translate(26px, -22px); }
+    }
+    @keyframes drip {
+      0%   { opacity: 0; transform: scaleY(0); transform-origin: top; }
+      50%  { opacity: 1; }
+      100% { opacity: 0; transform: scaleY(1); transform-origin: top; }
+    }
+
+    /* ============================================================
+       13. RESPONSIVE BREAKPOINTS
+    ============================================================ */
+
+    /* Tablet — 768px */
+    @media (max-width: 768px) {
+      .about__grid { grid-template-columns: 1fr; gap: var(--sp-6); }
+      .exp__grid   { grid-template-columns: 1fr; }
+      .contact__grid { grid-template-columns: 1fr; }
+    }
+
+    /* Mobile — 480px */
+    @media (max-width: 480px) {
+      .navbar__links { display: none; }
+      .container { padding: 0 var(--sp-2); }
+      .hero__heading { font-size: clamp(2.8rem, 13vw, 4rem); }
+      .hero__stat-num { font-size: 1.7rem; }
+      .section { padding: 56px 0; }
+      .contact__card { padding: var(--sp-3); }
+      .footer__inner { justify-content: center; text-align: center; }
+    }
+
+    /* Large screens — ensure nothing goes edge-to-edge */
+    @media (min-width: 1280px) {
+      .hero__content { padding-top: var(--sp-10); padding-bottom: var(--sp-12); }
+    }
+  </style>
 </head>
 <body>
 
-<div id="cglow"></div>
+  <!-- ============================================================
+       NAVBAR
+  ============================================================ -->
+  <header class="navbar" role="banner">
+    <div class="container navbar__inner">
+      <div class="navbar__logo"><span>[</span>AW<span>]</span></div>
 
-<!-- ══ NAV ══ -->
-<nav>
-  <div class="nav-logo">
-    <span class="logo-acc">[</span>AW<span class="logo-acc">]</span>
-  </div>
-  <ul class="navpill">
-    <li><a href="#about">About</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <button class="tbtn" id="tbtn" aria-label="Toggle theme">🌙</button>
-  <a href="mailto:aidenwilliams336@gmail.com" class="hire">Hire Me ↗</a>
-</nav>
+      <nav aria-label="Main navigation">
+        <ul class="navbar__links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
 
-<!-- ══ HERO ══ -->
-<section class="hero" id="home">
-  <div class="hgrid"></div>
-  <div class="orb o1"></div>
-  <div class="orb o2"></div>
+      <button class="navbar__theme" id="themeBtn" aria-label="Toggle colour theme">🌙</button>
+      <a href="mailto:aidenwilliams336@gmail.com" class="navbar__cta">Hire Me ↗</a>
+    </div>
+  </header>
 
-  <div class="hero-inner">
-    <div class="hpill">
-      <div class="pdot"><div class="pinner"></div></div>
-      <span>Open to work &nbsp;·&nbsp;</span>
-      <span class="ploc">📍 Cape Town, ZA</span>
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section class="hero" id="home" aria-label="Introduction">
+    <div class="hero__grid" aria-hidden="true"></div>
+    <div class="hero__orb hero__orb--1" aria-hidden="true"></div>
+    <div class="hero__orb hero__orb--2" aria-hidden="true"></div>
+
+    <div class="hero__content">
+      <!-- Status badge -->
+      <div class="hero__badge">
+        <div class="hero__badge-dot">
+          <div class="hero__badge-dot-inner"></div>
+        </div>
+        <span>Open to work &nbsp;·&nbsp;</span>
+        <span class="hero__badge-loc">📍 Cape Town, ZA</span>
+      </div>
+
+      <!-- Name -->
+      <h1 class="hero__heading">
+        Aiden<br>
+        <span class="ghost">Willi<span class="accent">am</span>s</span>
+      </h1>
+
+      <!-- Tagline -->
+      <p class="hero__sub">
+        Junior Software Developer — building real products with HTML, CSS &amp; JavaScript.
+        CodeSpace graduate with Merit · Currently at Listsecure.
+      </p>
+
+      <!-- CTAs -->
+      <div class="hero__buttons">
+        <a href="#projects" class="btn btn--primary">View Projects ↓</a>
+        <a href="https://github.com/Aiden-Williams19" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">GitHub Profile ↗</a>
+      </div>
+
+      <!-- Stats -->
+      <div class="hero__stats">
+        <div class="hero__stat">
+          <div class="hero__stat-num">48<em>+</em></div>
+          <div class="hero__stat-lbl">Repositories</div>
+        </div>
+        <div class="hero__stat">
+          <div class="hero__stat-num">6</div>
+          <div class="hero__stat-lbl">Live Projects</div>
+        </div>
+        <div class="hero__stat">
+          <div class="hero__stat-num">2<em>+</em></div>
+          <div class="hero__stat-lbl">Yrs Experience</div>
+        </div>
+      </div>
     </div>
 
-    <h1>
-      Aiden<br>
-      <span class="ghost">Willi<span class="acc">am</span>s</span>
-    </h1>
-
-    <p class="hsub">
-      Junior Software Developer — building real products with HTML, CSS &amp; JavaScript.
-      CodeSpace graduate with Merit · Currently at Listsecure.
-    </p>
-
-    <div class="hbtns">
-      <a href="#projects" class="btn bprimary">View Projects ↓</a>
-      <a href="https://github.com/Aiden-Williams19" target="_blank" rel="noopener" class="btn bsecond">GitHub Profile ↗</a>
+    <div class="hero__scroll" aria-hidden="true">
+      <div class="hero__scroll-line"></div>
+      Scroll
     </div>
+  </section>
 
-    <div class="hstats">
-      <div>
-        <div class="snum">48<em>+</em></div>
-        <div class="slbl">Repositories</div>
-      </div>
-      <div>
-        <div class="snum">4</div>
-        <div class="slbl">Live Projects</div>
-      </div>
-      <div>
-        <div class="snum">2<em>+</em></div>
-        <div class="slbl">Yrs Experience</div>
-      </div>
-    </div>
-  </div>
+  <!-- ============================================================
+       ABOUT
+  ============================================================ -->
+  <section class="section section--alt" id="about" aria-label="About">
+    <div class="container">
+      <header class="section__header">
+        <div class="eyebrow">About</div>
+        <h2 class="section__title">Committed.<br>Results-driven.</h2>
+      </header>
 
-  <div class="sarrow">
-    <div class="aline"></div>
-    Scroll
-  </div>
-</section>
+      <div class="about__grid">
+        <div class="about__copy">
+          <p>I'm a <strong>Junior Software Developer</strong> based in Kensington, Cape Town. I completed a 12-month CodeSpace Software Development course <strong>with Merit</strong> in March 2025, and currently work as a <strong>Junior Developer &amp; Systems Administrator</strong> at Listsecure — building features and managing backend vendor operations.</p>
+          <p>I thrive under pressure, think independently, and bring genuine professionalism to every team. Before pivoting to tech, I spent two years at <strong>Old Mutual Direct Financial Advice</strong> building skills in client communication, data management, and structured workflows — habits I carry into every project.</p>
+          <p>Always learning. Always building. Always looking for the next challenge to sharpen the craft.</p>
+        </div>
 
-<!-- ══ ABOUT ══ -->
-<section class="sec sec-alt" id="about">
-  <div class="eye">About</div>
-  <h2 class="stitle">Committed.<br>Results-driven.</h2>
-  <div class="awrap">
-    <div class="acopy">
-      <p>I'm a <strong>Junior Software Developer</strong> based in Kensington, Cape Town. I completed a 12-month CodeSpace Software Development course <strong>with Merit</strong> in March 2025, and I'm currently working as a <strong>Junior Developer &amp; Systems Administrator</strong> at Listsecure — contributing to the platform and managing backend vendor operations.</p>
-      <p>I thrive under pressure, think independently, and bring genuine professionalism to every team. Before pivoting to tech, I spent two years at <strong>Old Mutual Direct Financial Advice</strong> — building skills in client communication, data management, and structured workflows that I carry into every project.</p>
-      <p>Always learning. Always building. Always looking for the next challenge to sharpen the craft.</p>
-    </div>
-    <div>
-      <p class="sklbl">Tech Stack</p>
-      <div class="skcloud">
-        <span class="sk">HTML5</span><span class="sk">CSS3</span>
-        <span class="sk">JavaScript</span><span class="sk">WordPress</span>
-        <span class="sk">Git &amp; GitHub</span><span class="sk">Cursor AI</span>
-        <span class="sk">Responsive Design</span><span class="sk">Systems Admin</span>
-      </div>
-      <p class="sklbl">Currently learning</p>
-      <div class="skcloud">
-        <span class="sk">React.js</span><span class="sk">Node.js</span><span class="sk">REST APIs</span>
-      </div>
-      <div class="certbox">
-        <div class="cico">🏅</div>
         <div>
-          <div class="ctitle">Software Development — With Merit</div>
-          <div class="csub">CodeSpace Academy &nbsp;·&nbsp; March 2025 &nbsp;·&nbsp; CERT:1496</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+          <p class="skills__label">Tech Stack</p>
+          <div class="skills__cloud">
+            <span class="skill-tag">HTML5</span>
+            <span class="skill-tag">CSS3</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">WordPress</span>
+            <span class="skill-tag">Git &amp; GitHub</span>
+            <span class="skill-tag">Cursor AI</span>
+            <span class="skill-tag">Responsive Design</span>
+            <span class="skill-tag">Systems Admin</span>
+          </div>
 
-<!-- ══ EXPERIENCE ══ -->
-<section class="sec" id="experience">
-  <div class="eye">Experience</div>
-  <h2 class="stitle">Where I've<br>been building.</h2>
-  <div class="expgrid">
-    <div class="ecard">
-      <div class="edate">2025 — Present</div>
-      <div class="erole">Junior Developer &amp; Systems Admin</div>
-      <div class="eco">Listsecure</div>
-      <div class="edesc">Contributed to building and iterating on the company website. Handles backend operations including approving and verifying vendors on the platform as Systems Administrator.</div>
-    </div>
-    <div class="ecard">
-      <div class="edate">2024 — 2025</div>
-      <div class="erole">Software Development — Merit</div>
-      <div class="eco">CodeSpace Academy</div>
-      <div class="edesc">12-month intensive part-time program covering HTML, CSS, JavaScript, REST APIs, version control with Git, and modern frontend development workflows.</div>
-    </div>
-    <div class="ecard">
-      <div class="edate">2024 — 2025</div>
-      <div class="erole">Lead Generation Specialist</div>
-      <div class="eco">Way Media</div>
-      <div class="edesc">Identified and generated qualified leads to grow client pipelines across the agency's media campaigns and outreach programs.</div>
-    </div>
-    <div class="ecard">
-      <div class="edate">2021 — 2023</div>
-      <div class="erole">Personal Assistant</div>
-      <div class="eco">Old Mutual Direct Financial Advice</div>
-      <div class="edesc">Captured sales on XPLAN and Front Office, tracked new business cases on MyClient, and managed Annual Review communications with customers.</div>
-    </div>
-  </div>
-</section>
+          <p class="skills__label">Currently Learning</p>
+          <div class="skills__cloud">
+            <span class="skill-tag">React.js</span>
+            <span class="skill-tag">Node.js</span>
+            <span class="skill-tag">REST APIs</span>
+          </div>
 
-<!-- ══ PROJECTS ══ -->
-<section class="sec sec-alt" id="projects">
-  <div class="eye">Projects</div>
-  <h2 class="stitle">Things I've<br>shipped.</h2>
-  <p class="sbody">Real-world client and personal projects — from event staffing platforms to community sites.</p>
-
-  <div class="pgrid">
-
-    <!-- EventCore -->
-    <div class="pcard">
-      <div class="pprev" style="background:linear-gradient(140deg,#04111d 0%,#071d30 100%);">
-        <div class="pbg" style="background:radial-gradient(circle at 35% 60%,rgba(0,232,122,.13),transparent 55%);"></div>
-        <div class="ptxt">EVCORE</div>
-        <div class="pemo">🎪</div>
-        <div class="livebadge"><div class="ldot"></div>Live</div>
-      </div>
-      <div class="pbody">
-        <div class="pname">EventCore Solutions</div>
-        <div class="pdesc">Professional event staffing platform for South Africa. A fully live production web app connecting staffing solutions with event organisers. Built and maintained end-to-end.</div>
-        <div class="pfooter">
-          <span class="tag">JavaScript</span>
-          <span class="tag">React</span>
-          <span class="tag">CSS</span>
-          <div class="plinks">
-            <a href="https://eventcoresolutions.co.za" target="_blank" rel="noopener" class="ibtn" title="View live site">🌐</a>
-            <a href="https://github.com/Aiden-Williams19/eventcore" target="_blank" rel="noopener" class="ibtn" title="View on GitHub">⌥</a>
+          <div class="cert-card">
+            <div class="cert-card__icon">🏅</div>
+            <div>
+              <div class="cert-card__title">Software Development — With Merit</div>
+              <div class="cert-card__sub">CodeSpace Academy &nbsp;·&nbsp; March 2025 &nbsp;·&nbsp; CERT:1496</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+  </section>
 
-    <!-- Jefe -->
-    <div class="pcard">
-      <div class="pprev" style="background:linear-gradient(140deg,#120c03 0%,#221504 100%);">
-        <div class="pbg" style="background:radial-gradient(circle at 70% 35%,rgba(255,185,0,.09),transparent 55%);"></div>
-        <div class="ptxt">JEFE</div>
-        <div class="pemo">👔</div>
-      </div>
-      <div class="pbody">
-        <div class="pname">Jefe Website</div>
-        <div class="pdesc">A polished brand website for Jefe. Clean, modern layout showcasing products and services with full responsive design across all screen sizes.</div>
-        <div class="pfooter">
-          <span class="tag">HTML</span>
-          <span class="tag">CSS</span>
-          <span class="tag">JavaScript</span>
-          <div class="plinks">
-            <a href="https://github.com/Aiden-Williams19/jefe-website" target="_blank" rel="noopener" class="ibtn" title="View on GitHub">⌥</a>
-          </div>
+  <!-- ============================================================
+       EXPERIENCE
+  ============================================================ -->
+  <section class="section" id="experience" aria-label="Experience">
+    <div class="container">
+      <header class="section__header">
+        <div class="eyebrow">Experience</div>
+        <h2 class="section__title">Where I've<br>been building.</h2>
+      </header>
+
+      <div class="exp__grid">
+        <div class="exp-card">
+          <div class="exp-card__date">2025 — Present</div>
+          <div class="exp-card__role">Junior Developer &amp; Systems Admin</div>
+          <div class="exp-card__company">Listsecure</div>
+          <div class="exp-card__desc">Contributing to building and iterating on the company platform. Handles backend operations including approving and verifying vendors as Systems Administrator.</div>
+        </div>
+
+        <div class="exp-card">
+          <div class="exp-card__date">2024 — 2025</div>
+          <div class="exp-card__role">Software Development — Merit</div>
+          <div class="exp-card__company">CodeSpace Academy</div>
+          <div class="exp-card__desc">12-month intensive part-time program covering HTML, CSS, JavaScript, REST APIs, version control with Git, and modern frontend development workflows.</div>
+        </div>
+
+        <div class="exp-card">
+          <div class="exp-card__date">2024 — 2025</div>
+          <div class="exp-card__role">Lead Generation Specialist</div>
+          <div class="exp-card__company">Way Media</div>
+          <div class="exp-card__desc">Identified and generated qualified leads to grow client pipelines across the agency's media campaigns and outreach programs.</div>
+        </div>
+
+        <div class="exp-card">
+          <div class="exp-card__date">2021 — 2023</div>
+          <div class="exp-card__role">Personal Assistant</div>
+          <div class="exp-card__company">Old Mutual Direct Financial Advice</div>
+          <div class="exp-card__desc">Captured sales on XPLAN and Front Office, tracked new business cases on MyClient, and managed Annual Review communications with customers.</div>
         </div>
       </div>
     </div>
+  </section>
 
-    <!-- For My Brothers -->
-    <div class="pcard">
-      <div class="pprev" style="background:linear-gradient(140deg,#050f07 0%,#091608 100%);">
-        <div class="pbg" style="background:radial-gradient(circle at 50% 50%,rgba(0,232,122,.10),transparent 60%);"></div>
-        <div class="ptxt">FMB</div>
-        <div class="pemo">🤝</div>
-      </div>
-      <div class="pbody">
-        <div class="pname">For My Brothers</div>
-        <div class="pdesc">A community-driven web project built to connect and support a network. Clean digital platform with purposeful structure and a strong sense of identity.</div>
-        <div class="pfooter">
-          <span class="tag">HTML</span>
-          <span class="tag">CSS</span>
-          <span class="tag">JavaScript</span>
-          <div class="plinks">
-            <a href="https://github.com/Aiden-Williams19/formybrothers" target="_blank" rel="noopener" class="ibtn" title="View on GitHub">⌥</a>
+  <!-- ============================================================
+       PROJECTS — 3-col desktop / 2-col tablet / 1-col mobile
+  ============================================================ -->
+  <section class="section section--alt" id="projects" aria-label="Projects">
+    <div class="container">
+      <header class="section__header">
+        <div class="eyebrow">Projects</div>
+        <h2 class="section__title">Things I've<br>shipped.</h2>
+        <p class="section__body">Real-world client and personal projects — from event staffing platforms to food ordering apps.</p>
+      </header>
+
+      <div class="projects__grid">
+
+        <!-- EventCore -->
+        <div class="project-card">
+          <div class="project-card__preview" style="background: linear-gradient(140deg, #04111d 0%, #071d30 100%);">
+            <div style="position:absolute;inset:0;background:radial-gradient(circle at 35% 60%, rgba(0,232,122,.12), transparent 55%);"></div>
+            <div class="project-card__preview-label">EVCORE</div>
+            <div class="project-card__emoji">🎪</div>
+            <div class="project-card__live"><div class="project-card__live-dot"></div>Live</div>
+          </div>
+          <div class="project-card__body">
+            <div class="project-card__name">EventCore Solutions</div>
+            <div class="project-card__desc">Professional event staffing platform for South Africa. Connects staffing solutions with event organisers — built and maintained end-to-end.</div>
+            <div class="project-card__footer">
+              <span class="tag">React</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">CSS</span>
+              <div class="project-card__links">
+                <a href="https://eventcoresolutions.co.za" target="_blank" rel="noopener noreferrer" class="icon-btn" title="View live site">🌐</a>
+                <a href="https://github.com/Aiden-Williams19/eventcore" target="_blank" rel="noopener noreferrer" class="icon-btn" title="GitHub">⌥</a>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Specialized Property Core -->
-    <div class="pcard">
-      <div class="pprev" style="background:linear-gradient(140deg,#080818 0%,#0d0d2a 100%);">
-        <div class="pbg" style="background:radial-gradient(circle at 30% 65%,rgba(79,140,255,.11),transparent 55%);"></div>
-        <div class="ptxt">SPC</div>
-        <div class="pemo">🏢</div>
-      </div>
-      <div class="pbody">
-        <div class="pname">Specialized Property Core</div>
-        <div class="pdesc">A professional property solutions platform. Structured layout built to present real estate services with trust, clarity, and a polished client-facing design.</div>
-        <div class="pfooter">
-          <span class="tag">HTML</span>
-          <span class="tag">CSS</span>
-          <span class="tag">JavaScript</span>
-          <div class="plinks">
-            <a href="https://github.com/Aiden-Williams19/specialized-property-core" target="_blank" rel="noopener" class="ibtn" title="View on GitHub">⌥</a>
+        <!-- ListSecure app -->
+        <div class="project-card">
+          <div class="project-card__preview" style="background: linear-gradient(140deg, #030d18 0%, #061528 100%);">
+            <div style="position:absolute;inset:0;background:radial-gradient(circle at 60% 40%, rgba(79,140,255,.12), transparent 55%);"></div>
+            <div class="project-card__preview-label">LSEC</div>
+            <div class="project-card__emoji">🔐</div>
+            <div class="project-card__live"><div class="project-card__live-dot"></div>Live</div>
+          </div>
+          <div class="project-card__body">
+            <div class="project-card__name">ListSecure</div>
+            <div class="project-card__desc">Secure vendor listing and verification platform. Streamlines the process of approving and managing vendors with a clean, reliable interface.</div>
+            <div class="project-card__footer">
+              <span class="tag">React</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">CSS</span>
+              <div class="project-card__links">
+                <a href="https://listsecure.base44.app" target="_blank" rel="noopener noreferrer" class="icon-btn" title="View live site">🌐</a>
+                <a href="https://github.com/Aiden-Williams19/specialized-property-core" target="_blank" rel="noopener noreferrer" class="icon-btn" title="GitHub">⌥</a>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
 
-  </div>
-
-  <div style="margin-top:2.5rem;">
-    <a href="https://github.com/Aiden-Williams19?tab=repositories" target="_blank" rel="noopener" class="btn bsecond">
-      Browse all 48 repos on GitHub ↗
-    </a>
-  </div>
-</section>
-
-<!-- ══ CONTACT ══ -->
-<section class="sec sec-center" id="contact">
-  <div class="eye" style="justify-content:center;">Contact</div>
-  <h2 class="stitle">Let's build<br>something great.</h2>
-  <p class="sbody" style="margin:0 auto 3rem;">Open to junior dev roles, freelance work, and collaborations. Cape Town based — happy to go remote.</p>
-
-  <div class="ctouter">
-    <div class="ctcard">
-      <p class="ctintro">I respond within 24 hours. Whether it's a full-time role, a freelance project, or just a conversation — get in touch on any channel below.</p>
-      <div class="ctgrid">
-        <a href="mailto:aidenwilliams336@gmail.com" class="cl">
-          <div class="clico">✉</div>
-          <div class="clmeta">
-            <span class="cllbl">Email</span>
-            <span class="clval">aidenwilliams336@gmail.com</span>
+        <!-- Waffle Street Eats -->
+        <div class="project-card">
+          <div class="project-card__preview" style="background: linear-gradient(140deg, #1a0c00 0%, #2d1500 100%);">
+            <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(255,160,0,.10), transparent 55%);"></div>
+            <div class="project-card__preview-label">WFFLE</div>
+            <div class="project-card__emoji">🧇</div>
+            <div class="project-card__live"><div class="project-card__live-dot"></div>Live</div>
           </div>
+          <div class="project-card__body">
+            <div class="project-card__name">Waffle Street Eats</div>
+            <div class="project-card__desc">Food ordering web app for Waffle Street. Customers browse the menu and place orders — built with a warm, inviting UI to match the brand.</div>
+            <div class="project-card__footer">
+              <span class="tag">React</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">CSS</span>
+              <div class="project-card__links">
+                <a href="https://waffle-street-eats.base44.app" target="_blank" rel="noopener noreferrer" class="icon-btn" title="View live site">🌐</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Jefe -->
+        <div class="project-card">
+          <div class="project-card__preview" style="background: linear-gradient(140deg, #120c03 0%, #221504 100%);">
+            <div style="position:absolute;inset:0;background:radial-gradient(circle at 70% 35%, rgba(255,185,0,.09), transparent 55%);"></div>
+            <div class="project-card__preview-label">JEFE</div>
+            <div class="project-card__emoji">👔</div>
+          </div>
+          <div class="project-card__body">
+            <div class="project-card__name">Jefe Website</div>
+            <div class="project-card__desc">Polished brand website for Jefe. Modern layout showcasing products and services with full responsive design across all screen sizes.</div>
+            <div class="project-card__footer">
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+              <span class="tag">JavaScript</span>
+              <div class="project-card__links">
+                <a href="https://github.com/Aiden-Williams19/jefe-website" target="_blank" rel="noopener noreferrer" class="icon-btn" title="GitHub">⌥</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- For My Brothers -->
+        <div class="project-card">
+          <div class="project-card__preview" style="background: linear-gradient(140deg, #050f07 0%, #091608 100%);">
+            <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(0,232,122,.10), transparent 60%);"></div>
+            <div class="project-card__preview-label">FMB</div>
+            <div class="project-card__emoji">🤝</div>
+          </div>
+          <div class="project-card__body">
+            <div class="project-card__name">For My Brothers</div>
+            <div class="project-card__desc">Community-driven platform built to connect and support a network of like-minded individuals. Purposeful structure and a strong sense of identity.</div>
+            <div class="project-card__footer">
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+              <span class="tag">JavaScript</span>
+              <div class="project-card__links">
+                <a href="https://github.com/Aiden-Williams19/formybrothers" target="_blank" rel="noopener noreferrer" class="icon-btn" title="GitHub">⌥</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Specialized Property Core -->
+        <div class="project-card">
+          <div class="project-card__preview" style="background: linear-gradient(140deg, #080818 0%, #0d0d2a 100%);">
+            <div style="position:absolute;inset:0;background:radial-gradient(circle at 30% 65%, rgba(79,140,255,.11), transparent 55%);"></div>
+            <div class="project-card__preview-label">SPC</div>
+            <div class="project-card__emoji">🏢</div>
+          </div>
+          <div class="project-card__body">
+            <div class="project-card__name">Specialized Property Core</div>
+            <div class="project-card__desc">Professional property solutions platform. Structured layout presenting real estate services with trust, clarity, and a client-facing polish.</div>
+            <div class="project-card__footer">
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+              <span class="tag">JavaScript</span>
+              <div class="project-card__links">
+                <a href="https://github.com/Aiden-Williams19/specialized-property-core" target="_blank" rel="noopener noreferrer" class="icon-btn" title="GitHub">⌥</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /projects__grid -->
+
+      <div class="projects__more">
+        <a href="https://github.com/Aiden-Williams19?tab=repositories" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">
+          Browse all 48 repos on GitHub ↗
         </a>
-        <a href="tel:+27672089491" class="cl">
-          <div class="clico">📞</div>
-          <div class="clmeta">
-            <span class="cllbl">Phone</span>
-            <span class="clval">067 208 9491</span>
-          </div>
-        </a>
-        <a href="https://github.com/Aiden-Williams19" target="_blank" rel="noopener" class="cl">
-          <div class="clico" style="font-size:.8rem;font-weight:900;font-family:'Cabinet Grotesk',sans-serif;">GH</div>
-          <div class="clmeta">
-            <span class="cllbl">GitHub</span>
-            <span class="clval">Aiden-Williams19</span>
-          </div>
-        </a>
-        <a href="https://www.linkedin.com/in/aiden-williams-739660377" target="_blank" rel="noopener" class="cl">
-          <div class="clico" style="font-size:.85rem;font-weight:800;font-family:'Cabinet Grotesk',sans-serif;">in</div>
-          <div class="clmeta">
-            <span class="cllbl">LinkedIn</span>
-            <span class="clval">Aiden Williams</span>
-          </div>
-        </a>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ══ FOOTER ══ -->
-<footer>
-  <div class="flogo">[AW<span>.</span>dev]</div>
-  <span>Aiden Williams · Junior Developer · Cape Town 🇿🇦</span>
-  <span>© 2026 — Built with HTML, CSS &amp; JS</span>
-</footer>
+  <!-- ============================================================
+       CONTACT
+  ============================================================ -->
+  <section class="section" id="contact" aria-label="Contact">
+    <div class="container">
+      <header class="section__header">
+        <div class="eyebrow">Contact</div>
+        <h2 class="section__title">Let's build<br>something great.</h2>
+      </header>
 
-<script src="script.js"></script>
+      <div class="contact__card">
+        <p class="contact__intro">
+          Open to junior dev roles, freelance work, and collaborations. Cape Town based — happy to go remote.
+          I typically respond within 24 hours.
+        </p>
+        <div class="contact__grid">
+          <a href="mailto:aidenwilliams336@gmail.com" class="contact-link">
+            <div class="contact-link__icon">✉</div>
+            <div class="contact-link__meta">
+              <span class="contact-link__label">Email</span>
+              <span class="contact-link__value">aidenwilliams336@gmail.com</span>
+            </div>
+          </a>
+          <a href="tel:+27672089491" class="contact-link">
+            <div class="contact-link__icon">📞</div>
+            <div class="contact-link__meta">
+              <span class="contact-link__label">Phone</span>
+              <span class="contact-link__value">067 208 9491</span>
+            </div>
+          </a>
+          <a href="https://github.com/Aiden-Williams19" target="_blank" rel="noopener noreferrer" class="contact-link">
+            <div class="contact-link__icon" style="font-size:.8rem;font-weight:900;font-family:'Cabinet Grotesk',sans-serif;">GH</div>
+            <div class="contact-link__meta">
+              <span class="contact-link__label">GitHub</span>
+              <span class="contact-link__value">Aiden-Williams19</span>
+            </div>
+          </a>
+          <a href="https://www.linkedin.com/in/aiden-williams-739660377" target="_blank" rel="noopener noreferrer" class="contact-link">
+            <div class="contact-link__icon" style="font-size:.85rem;font-weight:800;font-family:'Cabinet Grotesk',sans-serif;">in</div>
+            <div class="contact-link__meta">
+              <span class="contact-link__label">LinkedIn</span>
+              <span class="contact-link__value">Aiden Williams</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container footer__inner">
+      <div class="footer__logo">[AW<span>.</span>dev]</div>
+      <span>Aiden Williams · Junior Developer · Cape Town 🇿🇦</span>
+      <span>© 2026 — Built with HTML, CSS &amp; JS</span>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT
+  ============================================================ -->
+  <script>
+    /* ── 1. Theme toggle ── */
+    const themeBtn  = document.getElementById('themeBtn');
+    const htmlEl    = document.documentElement;
+    let   isDark    = true;
+
+    themeBtn.addEventListener('click', () => {
+      isDark = !isDark;
+      htmlEl.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      themeBtn.textContent = isDark ? '🌙' : '☀️';
+    });
+
+    /* ── 2. Scroll-reveal experience cards ── */
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 100);
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.exp-card').forEach(el => revealObserver.observe(el));
+
+    /* ── 3. Active nav highlight ── */
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.navbar__links a');
+
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(a => a.classList.remove('active'));
+          const match = document.querySelector(`.navbar__links a[href="#${entry.target.id}"]`);
+          if (match) match.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+
+    sections.forEach(s => navObserver.observe(s));
+  </script>
 </body>
 </html>
