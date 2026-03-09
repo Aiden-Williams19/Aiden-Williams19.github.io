@@ -542,8 +542,9 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       transition: border-color 0.3s, background 0.3s, box-shadow 0.3s, transform 0.3s var(--ease);
-      opacity: 0;
-      transform: translateY(20px);
+      opacity: 1;
+      transform: translateY(0);
+      animation: fadeUp 0.55s var(--ease);
     }
     .exp-card.visible { opacity: 1; transform: translateY(0); }
     .exp-card:hover {
@@ -1648,4 +1649,17 @@
     const navObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          navLinks.forEach(a => a.classList.remove
+          // remove active from all links
+          navLinks.forEach(a => a.classList.remove('active'));
+          // find the corresponding link and add active
+          const id = entry.target.id;
+          const link = document.querySelector(`.navbar__links a[href="#${id}"]`);
+          if (link) link.classList.add('active');
+        }
+      });
+    }, { threshold: 0.5 });
+
+    sections.forEach(section => navObserver.observe(section));
+  </script>
+  </body>
+  </html>
