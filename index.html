@@ -3,1161 +3,49 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aiden Williams — Junior Developer</title>
-  <meta name="description" content="Junior Software Developer based in Cape Town, ZA. Building clean, purposeful web experiences." />
+
+  <!-- SEO -->
+  <title>Aiden Williams — Junior Software Developer | Cape Town</title>
+  <meta name="description" content="Junior Software Developer based in Cape Town, ZA. Building clean, purposeful web experiences with HTML, CSS & JavaScript. CodeSpace graduate with Merit." />
+  <meta name="keywords" content="junior developer, software developer, Cape Town, web development, HTML, CSS, JavaScript, React" />
+  <meta name="author" content="Aiden Williams" />
+  <link rel="canonical" href="https://aidenwilliams.co.za/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://aidenwilliams.co.za/" />
+  <meta property="og:title"       content="Aiden Williams — Junior Software Developer" />
+  <meta property="og:description" content="Building clean, purposeful web experiences. Cape Town based." />
+  <meta property="og:image"       content="https://aidenwilliams.co.za/og-image.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Aiden Williams — Junior Software Developer" />
+  <meta name="twitter:description" content="Building clean, purposeful web experiences. Cape Town based." />
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Epilogue:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet" />
 
-  <style>
-    /* ============================================================
-       1. DESIGN TOKENS
-    ============================================================ */
-    :root {
-      /* Spacing scale — 8px base */
-      --sp-1:  8px;
-      --sp-2:  16px;
-      --sp-3:  24px;
-      --sp-4:  32px;
-      --sp-5:  40px;
-      --sp-6:  48px;
-      --sp-8:  64px;
-      --sp-10: 80px;
-      --sp-12: 96px;
-
-      /* Layout */
-      --max-w: 1160px;
-      --nav-h: 64px;
-      --radius: 12px;
-      --radius-lg: 20px;
-
-      /* Palette */
-      --green:      #00e87a;
-      --green-dim:  rgba(0, 232, 122, 0.10);
-      --green-glow: rgba(0, 232, 122, 0.20);
-      --blue:       #4f8cff;
-
-      /* Easing */
-      --ease:   cubic-bezier(0.22, 1, 0.36, 1);
-      --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    /* Dark theme */
-    [data-theme="dark"] {
-      --bg:       #080c0f;
-      --bg-alt:   #0d1318;
-      --surface:  #111920;
-      --card:     #141e27;
-      --card-h:   #1a2634;
-      --border:   rgba(255, 255, 255, 0.07);
-      --bhi:      rgba(0, 232, 122, 0.28);
-      --text:     #edf2f7;
-      --t2:       #7a8fa0;
-      --t3:       #364a5c;
-      --glass:    rgba(8, 12, 15, 0.85);
-      --shadow:   0 20px 60px rgba(0, 0, 0, 0.5);
-    }
-
-    /* Light theme */
-    [data-theme="light"] {
-      --bg:       #f4f6f9;
-      --bg-alt:   #eaecf0;
-      --surface:  #ffffff;
-      --card:     #ffffff;
-      --card-h:   #f7f9fc;
-      --border:   rgba(0, 0, 0, 0.08);
-      --bhi:      rgba(0, 170, 90, 0.35);
-      --text:     #0c111a;
-      --t2:       #4a5568;
-      --t3:       #94a3b8;
-      --glass:    rgba(244, 246, 249, 0.90);
-      --shadow:   0 20px 60px rgba(0, 0, 0, 0.08);
-      --green:      #00a854;
-      --green-dim:  rgba(0, 168, 84, 0.10);
-      --green-glow: rgba(0, 168, 84, 0.16);
-    }
-
-    /* ============================================================
-       2. RESET
-    ============================================================ */
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Epilogue', sans-serif;
-      font-size: 16px;
-      line-height: 1.65;
-      overflow-x: hidden;
-      transition: background 0.35s var(--ease), color 0.35s var(--ease);
-    }
-
-    a  { color: inherit; text-decoration: none; }
-    img { display: block; max-width: 100%; }
-    button { font-family: inherit; cursor: pointer; border: none; background: none; }
-
-    /* Subtle grain overlay */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 9000;
-      opacity: 0.4;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-    }
-
-    /* ============================================================
-       3. LAYOUT UTILITY — centred container
-    ============================================================ */
-    .container {
-      width: 100%;
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 var(--sp-4);
-    }
-
-    /* ============================================================
-       4. NAVBAR
-    ============================================================ */
-    .navbar {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 500;
-      height: var(--nav-h);
-      background: var(--glass);
-      backdrop-filter: blur(20px) saturate(160%);
-      -webkit-backdrop-filter: blur(20px) saturate(160%);
-      border-bottom: 1px solid var(--border);
-      transition: background 0.35s var(--ease);
-    }
-
-    .navbar__inner {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      gap: var(--sp-2);
-    }
-
-    .navbar__logo {
-      font-family: 'Cabinet Grotesk', sans-serif;
-      font-weight: 900;
-      font-size: 1.1rem;
-      letter-spacing: -0.03em;
-      margin-right: auto;
-      flex-shrink: 0;
-    }
-    .navbar__logo span { color: var(--green); }
-
-    .navbar__links {
-      display: flex;
-      list-style: none;
-      gap: 2px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 4px;
-    }
-    .navbar__links a {
-      display: block;
-      padding: 6px 16px;
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: var(--t2);
-      border-radius: 999px;
-      transition: background 0.18s, color 0.18s;
-      white-space: nowrap;
-    }
-    .navbar__links a:hover,
-    .navbar__links a.active {
-      background: var(--green);
-      color: #000;
-    }
-
-    .navbar__theme {
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--text);
-      font-size: 0.95rem;
-      display: grid;
-      place-items: center;
-      transition: border-color 0.2s, transform 0.3s;
-      flex-shrink: 0;
-    }
-    .navbar__theme:hover { border-color: var(--bhi); transform: rotate(20deg); }
-
-    .navbar__cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 8px 18px;
-      background: var(--green);
-      color: #000;
-      font-size: 0.78rem;
-      font-weight: 700;
-      border-radius: 999px;
-      transition: opacity 0.2s, transform 0.2s;
-      flex-shrink: 0;
-    }
-    .navbar__cta:hover { opacity: 0.85; transform: translateY(-1px); }
-
-    /* ============================================================
-       5. HERO — fixed centred layout, no large gaps
-    ============================================================ */
-    .hero {
-      /* 
-        FIX: Use flex column + min-height instead of grid place-items:center.
-        This prevents the grid cell from expanding to full viewport height
-        and pushing content to the middle of a sea of whitespace.
-        The content centres itself naturally via margin: auto in the flex child.
-      */
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100svh;
-      padding-top: var(--nav-h);
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Background decorations — purely visual, non-layout */
-    .hero__grid {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background-image:
-        linear-gradient(var(--border) 1px, transparent 1px),
-        linear-gradient(90deg, var(--border) 1px, transparent 1px);
-      background-size: 56px 56px;
-      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, #000 20%, transparent 100%);
-    }
-
-    .hero__orb {
-      position: absolute;
-      border-radius: 50%;
-      pointer-events: none;
-      filter: blur(100px);
-    }
-    .hero__orb--1 {
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(0,232,122,0.07), transparent 70%);
-      top: -150px; right: -100px;
-      animation: float1 18s ease-in-out infinite;
-    }
-    .hero__orb--2 {
-      width: 420px; height: 420px;
-      background: radial-gradient(circle, rgba(79,140,255,0.06), transparent 70%);
-      bottom: -80px; left: -60px;
-      animation: float2 22s ease-in-out infinite;
-    }
-
-    /* 
-      FIX: The hero content is a regular block inside a flex container.
-      max-width + margin:auto centres it. padding gives breathing room.
-      No grid tricks, no place-items — clean and predictable at every width.
-    */
-    .hero__content {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      max-width: 860px;
-      margin: 0 auto;
-      padding: var(--sp-8) var(--sp-4) var(--sp-10);
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .hero__badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 5px 16px 5px 8px;
-      background: var(--surface);
-      border: 1px solid var(--bhi);
-      border-radius: 999px;
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: var(--t2);
-      margin-bottom: var(--sp-5);
-      animation: fadeUp 0.55s var(--ease) 0.1s both;
-    }
-    .hero__badge-dot {
-      width: 22px; height: 22px;
-      border-radius: 50%;
-      background: var(--green-dim);
-      border: 1px solid var(--bhi);
-      display: grid;
-      place-items: center;
-      flex-shrink: 0;
-    }
-    .hero__badge-dot-inner {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: var(--green);
-      animation: breathe 2.4s ease infinite;
-    }
-    .hero__badge-loc { color: var(--green); font-weight: 600; }
-
-    .hero__heading {
-      font-family: 'Cabinet Grotesk', sans-serif;
-      font-weight: 900;
-      /* 
-        FIX: clamp now tops out at 7.5rem (was 9.5rem).
-        At 9.5rem on a 1280px screen the heading took up ~200px of height
-        contributing to perceived "empty space" around it.
-        7.5rem is still punchy but doesn't eat the viewport.
-      */
-      font-size: clamp(3.5rem, 9vw, 7.5rem);
-      letter-spacing: -0.05em;
-      line-height: 0.92;
-      margin-bottom: var(--sp-4);
-      animation: fadeUp 0.55s var(--ease) 0.2s both;
-    }
-    .hero__heading .ghost {
-      display: block;
-      -webkit-text-stroke: 1.5px var(--t3);
-      -webkit-text-fill-color: transparent;
-      color: transparent;
-      transition: -webkit-text-stroke 0.35s;
-    }
-    [data-theme="light"] .hero__heading .ghost { -webkit-text-stroke: 1.5px var(--t2); }
-    .hero__heading .accent {
-      -webkit-text-fill-color: var(--green);
-      -webkit-text-stroke: 0;
-      color: var(--green);
-    }
-
-    .hero__sub {
-      font-size: 1.05rem;
-      font-weight: 300;
-      color: var(--t2);
-      max-width: 480px;
-      line-height: 1.8;
-      margin-bottom: var(--sp-5);
-      animation: fadeUp 0.55s var(--ease) 0.3s both;
-    }
-
-    .hero__buttons {
-      display: flex;
-      gap: var(--sp-2);
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-bottom: var(--sp-6);
-      animation: fadeUp 0.55s var(--ease) 0.4s both;
-    }
-
-    /* Shared button styles */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 12px 28px;
-      font-family: inherit;
-      font-size: 0.88rem;
-      font-weight: 600;
-      border-radius: 999px;
-      border: none;
-      cursor: pointer;
-      transition: transform 0.2s var(--ease), box-shadow 0.2s, opacity 0.2s;
-      white-space: nowrap;
-      text-decoration: none;
-    }
-    .btn--primary { background: var(--green); color: #000; }
-    .btn--primary:hover { transform: translateY(-2px); box-shadow: 0 10px 28px var(--green-glow); }
-    .btn--secondary { background: transparent; color: var(--text); border: 1.5px solid var(--border); }
-    .btn--secondary:hover { border-color: var(--bhi); color: var(--green); transform: translateY(-2px); }
-
-    .hero__stats {
-      width: 100%;
-      max-width: 480px;
-      display: flex;
-      justify-content: center;
-      gap: clamp(32px, 6vw, 64px);
-      padding-top: var(--sp-4);
-      border-top: 1px solid var(--border);
-      animation: fadeUp 0.55s var(--ease) 0.5s both;
-    }
-    .hero__stat { text-align: center; }
-    .hero__stat-num {
-      font-family: 'Cabinet Grotesk', sans-serif;
-      font-size: 2.2rem;
-      font-weight: 900;
-      letter-spacing: -0.05em;
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-    .hero__stat-num em { font-style: normal; color: var(--green); }
-    .hero__stat-lbl {
-      font-size: 0.7rem;
-      color: var(--t3);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .hero__scroll {
-      position: absolute;
-      bottom: var(--sp-3);
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      color: var(--t3);
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      animation: fadeUp 1s var(--ease) 1s both;
-    }
-    .hero__scroll-line {
-      width: 1px; height: 40px;
-      background: linear-gradient(to bottom, var(--green), transparent);
-      animation: drip 2.2s ease-in-out infinite;
-    }
-
-    /* ============================================================
-       6. SECTION SHELL
-    ============================================================ */
-    .section {
-      padding: clamp(64px, 8vw, 112px) 0;
-    }
-    .section--alt { background: var(--bg-alt); }
-
-    /* 
-      FIX: Every section's content goes through .container.
-      This ensures a consistent max-width + horizontal padding
-      and prevents content from stretching to 100vw on large screens.
-    */
-    .section__header {
-      margin-bottom: var(--sp-8);
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--green);
-      margin-bottom: var(--sp-2);
-    }
-    .eyebrow::before {
-      content: '';
-      width: 20px; height: 2px;
-      background: var(--green);
-      border-radius: 2px;
-      flex-shrink: 0;
-    }
-
-    .section__title {
-      font-family: 'Cabinet Grotesk', sans-serif;
-      font-weight: 900;
-      font-size: clamp(2rem, 4vw, 3.4rem);
-      letter-spacing: -0.04em;
-      line-height: 1.05;
-      margin-bottom: var(--sp-2);
-    }
-
-    .section__body {
-      font-size: 1rem;
-      color: var(--t2);
-      max-width: 500px;
-      line-height: 1.8;
-    }
-
-    /* ============================================================
-       7. ABOUT
-    ============================================================ */
-    .about__grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(40px, 5vw, 80px);
-      align-items: start;
-    }
-
-    .about__copy { color: var(--t2); line-height: 1.88; }
-    .about__copy p + p { margin-top: var(--sp-2); }
-    .about__copy strong { color: var(--text); font-weight: 600; }
-
-    .skills__label {
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--t3);
-      margin-bottom: var(--sp-1);
-    }
-    .skills__cloud {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: var(--sp-3);
-    }
-    .skill-tag {
-      padding: 6px 14px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: var(--t2);
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
-    }
-    .skill-tag:hover { border-color: var(--bhi); color: var(--green); background: var(--green-dim); }
-
-    .cert-card {
-      display: flex;
-      align-items: center;
-      gap: var(--sp-2);
-      padding: var(--sp-2) var(--sp-3);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--green);
-      border-radius: var(--radius);
-    }
-    .cert-card__icon { font-size: 1.8rem; }
-    .cert-card__title { font-weight: 700; font-size: 0.9rem; line-height: 1.35; }
-    .cert-card__sub { font-size: 0.74rem; color: var(--t3); margin-top: 2px; }
-
-    /* ============================================================
-       8. EXPERIENCE
-    ============================================================ */
-    .exp__grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--sp-3);
-    }
-
-    .exp-card {
-      padding: var(--sp-3);
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      transition: border-color 0.3s, background 0.3s, box-shadow 0.3s, transform 0.3s var(--ease);
-      opacity: 1;
-      transform: translateY(0);
-      animation: fadeUp 0.55s var(--ease);
-    }
-    .exp-card.visible { opacity: 1; transform: translateY(0); }
-    .exp-card:hover {
-      border-color: var(--bhi);
-      background: var(--card-h);
-      box-shadow: var(--shadow);
-      transform: translateY(-3px);
-    }
-
-    .exp-card__date {
-      display: inline-block;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      color: var(--green);
-      background: var(--green-dim);
-      border: 1px solid var(--bhi);
-      padding: 3px 10px;
-      border-radius: 999px;
-      margin-bottom: var(--sp-2);
-    }
-    .exp-card__role {
-      font-family: 'Cabinet Grotesk', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 4px;
-    }
-    .exp-card__company { font-size: 0.8rem; color: var(--t3); margin-bottom: var(--sp-1); }
-    .exp-card__desc { font-size: 0.86rem; color: var(--t2); line-height: 1.72; }
-
-    /* ============================================================
-       9. PROJECTS — 3-col desktop, 2-col tablet, 1-col mobile
-    ============================================================ */
-    .projects__grid {
-      display: grid;
-      /*
-        FIX: auto-fill with minmax(280px, 1fr) gives us:
-        - 1 col on mobile (< 640px)
-        - 2 cols on tablet (640–1024px)
-        - 3 cols on desktop (1024px+)
-        No media query hacks needed — the grid responds naturally.
-      */
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: var(--sp-3);
-    }
-
-    .project-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      transition: transform 0.32s var(--ease), border-color 0.32s, box-shadow 0.32s;
-    }
-    .project-card:hover {
-      transform: translateY(-6px);
-      border-color: var(--bhi);
-      box-shadow: var(--shadow), 0 0 32px var(--green-glow);
-    }
-
-    /* Animated top-border on hover */
-    .project-card::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--green), var(--blue));
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.38s var(--ease);
-    }
-    .project-card:hover::after { transform: scaleX(1); }
-
-    .project-card__preview {
-      height: 160px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-    .project-card__preview-label {
-      position: absolute;
-      font-family: 'Cabinet Grotesk', sans-serif;
-      font-size: 4.5rem;
-      font-weight: 900;
-      letter-spacing: -0.06em;
-      opacity: 0.07;
-      white-space: nowrap;
-      color: var(--text);
-      user-select: none;
-    }
-    .project-card__emoji {
-      font-size: 2.6rem;
-      position: relative;
-      z-index: 1;
-      filter: drop-shadow(0 4px 16px rgba(0,0,0,0.3));
-      transition: transform 0.3s var(--spring);
-    }
-    .project-card:hover .project-card__emoji { transform: scale(1.18) rotate(-5deg); }
-
-    .project-card__live {
-      position: absolute;
-      top: 12px; right: 12px;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 3px 10px;
-      background: rgba(0, 232, 122, 0.14);
-      border: 1px solid rgba(0, 232, 122, 0.35);
-      border-radius: 999px;
-      font-size: 0.67rem;
-      font-weight: 700;
-      color: var(--green);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      z-index: 2;
-    }
-    .project-card__live-dot {
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: var(--green);
-      animation: breathe 1.8s ease infinite;
-    }
-
-    .project-card__body {
-      padding: var(--sp-3);
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    .project-card__name {
-      font-family: 'Cabinet Grotesk', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 6px;
-    }
-    .project-card__desc {
-      font-size: 0.84rem;
-      color: var(--t2);
-      line-height: 1.7;
-      flex: 1;
-      margin-bottom: var(--sp-2);
-    }
-
-    .project-card__footer {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-    .tag {
-      padding: 3px 9px;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: var(--t3);
-    }
-    .project-card__links { margin-left: auto; display: flex; gap: 6px; }
-    .icon-btn {
-      width: 32px; height: 32px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--t2);
-      font-size: 0.85rem;
-      display: grid;
-      place-items: center;
-      text-decoration: none;
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
-    }
-    .icon-btn:hover { border-color: var(--bhi); color: var(--green); background: var(--green-dim); }
-
-    .projects__more {
-      margin-top: var(--sp-6);
-      text-align: left;
-    }
-
-    /* ============================================================
-       10. CONTACT
-    ============================================================ */
-    .contact__card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: clamp(32px, 4vw, 56px);
-      max-width: 720px;
-      position: relative;
-      overflow: hidden;
-    }
-    .contact__card::before {
-      content: '';
-      position: absolute;
-      top: -80px; right: -80px;
-      width: 260px; height: 260px;
-      border-radius: 50%;
-      background: radial-gradient(circle, var(--green-glow), transparent 70%);
-      pointer-events: none;
-    }
-
-    .contact__intro {
-      font-size: 0.95rem;
-      color: var(--t2);
-      line-height: 1.8;
-      max-width: 500px;
-      margin-bottom: var(--sp-4);
-    }
-
-    .contact__grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--sp-2);
-    }
-    .contact-link {
-      display: flex;
-      align-items: center;
-      gap: var(--sp-2);
-      padding: var(--sp-2) var(--sp-2);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      font-size: 0.84rem;
-      font-weight: 500;
-      color: var(--text);
-      transition: border-color 0.2s, color 0.2s, transform 0.2s;
-    }
-    .contact-link:hover { border-color: var(--bhi); color: var(--green); transform: translateX(4px); }
-    .contact-link__icon {
-      width: 34px; height: 34px;
-      border-radius: 8px;
-      background: var(--green-dim);
-      border: 1px solid var(--bhi);
-      display: grid;
-      place-items: center;
-      font-size: 0.9rem;
-      flex-shrink: 0;
-    }
-    .contact-link__meta { display: flex; flex-direction: column; min-width: 0; }
-    .contact-link__label { font-size: 0.66rem; color: var(--t3); font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 1px; }
-    .contact-link__value { font-size: 0.82rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-    /* ============================================================
-       11. FOOTER
-    ============================================================ */
-    .footer {
-      padding: var(--sp-4) 0;
-      border-top: 1px solid var(--border);
-    }
-    .footer__inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: var(--sp-2);
-      font-size: 0.78rem;
-      color: var(--t3);
-    }
-    .footer__logo {
-      font-family: 'Cabinet Grotesk', sans-serif;
-      font-weight: 900;
-      font-size: 0.95rem;
-      color: var(--text);
-      letter-spacing: -0.02em;
-    }
-    .footer__logo span { color: var(--green); }
-
-    /* ============================================================
-       12. KEYFRAMES
-    ============================================================ */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes breathe {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: 0.45; transform: scale(0.82); }
-    }
-    @keyframes float1 {
-      0%, 100% { transform: translate(0, 0); }
-      33%       { transform: translate(-24px, 28px); }
-      66%       { transform: translate(18px, -22px); }
-    }
-    @keyframes float2 {
-      0%, 100% { transform: translate(0, 0); }
-      50%       { transform: translate(26px, -22px); }
-    }
-    @keyframes drip {
-      0%   { opacity: 0; transform: scaleY(0); transform-origin: top; }
-      50%  { opacity: 1; }
-      100% { opacity: 0; transform: scaleY(1); transform-origin: top; }
-    }
-
-    /* ============================================================
-       13. WORKFLOW SECTION
-       Reuses existing tokens — no new colours introduced.
-    ============================================================ */
-
-    /* ── Banner quote at the top ── */
-    .workflow__banner {
-      display: flex;
-      align-items: flex-start;
-      gap: var(--sp-3);
-      padding: var(--sp-3) var(--sp-4);
-      background: var(--green-dim);
-      border: 1px solid var(--bhi);
-      border-radius: var(--radius);
-      margin-bottom: var(--sp-8);
-    }
-    .workflow__banner-icon {
-      font-size: 1.5rem;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-    .workflow__banner-text {
-      font-size: 0.95rem;
-      color: var(--t2);
-      line-height: 1.78;
-    }
-    .workflow__banner-text strong { color: var(--text); font-weight: 600; }
-
-    /* ── Two-column top layout: Tools left, Platforms right ── */
-    .workflow__top {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--sp-4);
-      margin-bottom: var(--sp-4);
-    }
-
-    /* ── Reusable tool-group card ── */
-    .tool-group {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: var(--sp-3);
-      transition: border-color 0.25s, box-shadow 0.25s;
-    }
-    .tool-group:hover {
-      border-color: var(--bhi);
-      box-shadow: var(--shadow);
-    }
-
-    .tool-group__label {
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--t3);
-      margin-bottom: var(--sp-3);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .tool-group__label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    /* ── Reusable tool-tag pill ── */
-    .tool-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--t2);
-      transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.2s;
-      cursor: default;
-    }
-    .tool-tag:hover {
-      border-color: var(--bhi);
-      color: var(--green);
-      background: var(--green-dim);
-      transform: translateY(-1px);
-    }
-    .tool-tag__icon {
-      width: 20px; height: 20px;
-      border-radius: 5px;
-      display: grid;
-      place-items: center;
-      font-size: 0.75rem;
-      flex-shrink: 0;
-      background: var(--green-dim);
-      border: 1px solid var(--bhi);
-    }
-    .tool-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-
-    /* ── Platform card (Base44) ── */
-    .platform-card {
-      display: flex;
-      align-items: center;
-      gap: var(--sp-2);
-      padding: var(--sp-2) var(--sp-3);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      transition: border-color 0.2s, transform 0.2s;
-      margin-bottom: 10px;
-    }
-    .platform-card:last-child { margin-bottom: 0; }
-    .platform-card:hover { border-color: var(--bhi); transform: translateX(3px); }
-    .platform-card__icon {
-      width: 36px; height: 36px;
-      border-radius: 9px;
-      background: var(--green-dim);
-      border: 1px solid var(--bhi);
-      display: grid;
-      place-items: center;
-      font-size: 1.1rem;
-      flex-shrink: 0;
-    }
-    .platform-card__name {
-      font-family: 'Cabinet Grotesk', sans-serif;
-      font-weight: 800;
-      font-size: 0.9rem;
-      letter-spacing: -0.01em;
-    }
-    .platform-card__desc { font-size: 0.75rem; color: var(--t3); margin-top: 1px; }
-
-    /* ── Base44 projects sub-section ── */
-    .workflow__projects-label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--t3);
-      margin-bottom: var(--sp-3);
-    }
-    .workflow__projects-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    .workflow__cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: var(--sp-3);
-    }
-
-    /* ── WorkflowCard component ── */
-    .workflow-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      transition: transform 0.3s var(--ease), border-color 0.3s, box-shadow 0.3s;
-    }
-    .workflow-card:hover {
-      transform: translateY(-5px);
-      border-color: var(--bhi);
-      box-shadow: var(--shadow), 0 0 28px var(--green-glow);
-    }
-    .workflow-card::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--green), var(--blue));
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.36s var(--ease);
-    }
-    .workflow-card:hover::after { transform: scaleX(1); }
-
-    .workflow-card__preview {
-      height: 140px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-    .workflow-card__preview-bg { position: absolute; inset: 0; }
-    .workflow-card__preview-label {
-      position: absolute;
-      font-family: 'Cabinet Grotesk', sans-serif;
-      font-size: 4rem; font-weight: 900;
-      letter-spacing: -0.06em;
-      opacity: 0.07;
-      white-space: nowrap;
-      color: var(--text);
-      user-select: none;
-    }
-    .workflow-card__emoji {
-      font-size: 2.4rem;
-      position: relative; z-index: 1;
-      filter: drop-shadow(0 4px 14px rgba(0,0,0,0.3));
-      transition: transform 0.3s var(--spring);
-    }
-    .workflow-card:hover .workflow-card__emoji { transform: scale(1.18) rotate(-5deg); }
-
-    /* Live + Platform badge row */
-    .workflow-card__badges {
-      position: absolute;
-      top: 10px; right: 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 5px;
-      z-index: 2;
-    }
-    .badge--live {
-      display: inline-flex; align-items: center; gap: 4px;
-      padding: 3px 9px;
-      background: rgba(0,232,122,0.14);
-      border: 1px solid rgba(0,232,122,0.35);
-      border-radius: 999px;
-      font-size: 0.65rem; font-weight: 700;
-      color: var(--green);
-      letter-spacing: 0.06em; text-transform: uppercase;
-    }
-    .badge--live-dot {
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: var(--green);
-      animation: breathe 1.8s ease infinite;
-    }
-    .badge--platform {
-      display: inline-flex; align-items: center; gap: 4px;
-      padding: 3px 9px;
-      background: rgba(79,140,255,0.12);
-      border: 1px solid rgba(79,140,255,0.28);
-      border-radius: 999px;
-      font-size: 0.65rem; font-weight: 700;
-      color: var(--blue);
-      letter-spacing: 0.04em;
-    }
-
-    .workflow-card__body {
-      padding: var(--sp-3);
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    .workflow-card__name {
-      font-family: 'Cabinet Grotesk', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 6px;
-    }
-    .workflow-card__desc {
-      font-size: 0.84rem;
-      color: var(--t2);
-      line-height: 1.7;
-      flex: 1;
-      margin-bottom: var(--sp-2);
-    }
-    .workflow-card__footer {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    /* ============================================================
-       14. RESPONSIVE BREAKPOINTS
-    ============================================================ */
-
-    /* Tablet — 768px */
-    @media (max-width: 768px) {
-      .about__grid { grid-template-columns: 1fr; gap: var(--sp-6); }
-      .exp__grid   { grid-template-columns: 1fr; }
-      .contact__grid { grid-template-columns: 1fr; }
-      .workflow__top { grid-template-columns: 1fr; }
-    }
-
-    /* Mobile — 480px */
-    @media (max-width: 480px) {
-      .navbar__links { display: none; }
-      .container { padding: 0 var(--sp-2); }
-      .hero__heading { font-size: clamp(2.8rem, 13vw, 4rem); }
-      .hero__stat-num { font-size: 1.7rem; }
-      .section { padding: 56px 0; }
-      .contact__card { padding: var(--sp-3); }
-      .footer__inner { justify-content: center; text-align: center; }
-    }
-
-    /* Large screens — ensure nothing goes edge-to-edge */
-    @media (min-width: 1280px) {
-      .hero__content { padding-top: var(--sp-10); padding-bottom: var(--sp-12); }
-    }
-  </style>
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <!-- ============================================================
-       NAVBAR
-  ============================================================ -->
-  <header class="navbar" role="banner">
-    <div class="container navbar__inner">
-      <div class="navbar__logo"><span>[</span>AW<span>]</span></div>
+  <!-- Cursor glow (desktop) -->
+  <div id="cglow" aria-hidden="true"></div>
 
+  <!-- ══════════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════════ -->
+  <header class="navbar" role="banner">
+    <div class="navbar__inner">
+      <a href="#home" class="navbar__logo" aria-label="Aiden Williams — Home">
+        <span>[</span>AW<span>]</span>
+      </a>
+
+      <!-- Desktop nav -->
       <nav aria-label="Main navigation">
         <ul class="navbar__links">
           <li><a href="#about">About</a></li>
@@ -1168,14 +56,35 @@
         </ul>
       </nav>
 
+      <!-- Controls -->
       <button class="navbar__theme" id="themeBtn" aria-label="Toggle colour theme">🌙</button>
-      <a href="mailto:aidenwilliams336@gmail.com?subject=Portfolio%20Inquiry&body=Hi%20Aiden%2C%0A%0AI%27m%20interested%20in%20discussing%20an%20opportunity.%0A%0ABest%20regards" class="navbar__cta" aria-label="Send email to Aiden Williams">Hire Me ↗</a>
+
+      <!-- Mobile hamburger -->
+      <button class="navbar__burger" id="navBurger" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="navDrawer">
+        <span></span><span></span><span></span>
+      </button>
+
+      <a href="mailto:aidenwilliams336@gmail.com?subject=Portfolio%20Inquiry&body=Hi%20Aiden%2C%0A%0AI%27m%20interested%20in%20discussing%20an%20opportunity.%0A%0ABest%20regards"
+         class="navbar__cta" aria-label="Hire Aiden — Send email">
+        Hire Me ↗
+      </a>
     </div>
   </header>
 
-  <!-- ============================================================
+  <!-- Mobile drawer nav -->
+  <nav id="navDrawer" class="navbar__drawer" aria-label="Mobile navigation">
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#workflow">Workflow</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#services">Services &amp; Pricing</a></li>
+    </ul>
+  </nav>
+
+  <!-- ══════════════════════════════════════════
        HERO
-  ============================================================ -->
+  ══════════════════════════════════════════ -->
   <section class="hero" id="home" aria-label="Introduction">
     <div class="hero__grid" aria-hidden="true"></div>
     <div class="hero__orb hero__orb--1" aria-hidden="true"></div>
@@ -1183,8 +92,8 @@
 
     <div class="hero__content">
       <!-- Status badge -->
-      <div class="hero__badge">
-        <div class="hero__badge-dot">
+      <div class="hero__badge" role="status" aria-label="Currently open to work, based in Cape Town">
+        <div class="hero__badge-dot" aria-hidden="true">
           <div class="hero__badge-dot-inner"></div>
         </div>
         <span>Open to work &nbsp;·&nbsp;</span>
@@ -1210,17 +119,17 @@
       </div>
 
       <!-- Stats -->
-      <div class="hero__stats">
+      <div class="hero__stats" aria-label="Portfolio statistics">
         <div class="hero__stat">
-          <div class="hero__stat-num">48<em>+</em></div>
+          <div class="hero__stat-num" aria-label="48 plus repositories">48<em>+</em></div>
           <div class="hero__stat-lbl">Repositories</div>
         </div>
         <div class="hero__stat">
-          <div class="hero__stat-num">6</div>
+          <div class="hero__stat-num" aria-label="6 live projects">6</div>
           <div class="hero__stat-lbl">Live Projects</div>
         </div>
         <div class="hero__stat">
-          <div class="hero__stat-num">2<em>+</em></div>
+          <div class="hero__stat-num" aria-label="2 plus years experience">2<em>+</em></div>
           <div class="hero__stat-lbl">Yrs Experience</div>
         </div>
       </div>
@@ -1232,10 +141,10 @@
     </div>
   </section>
 
-  <!-- ============================================================
+  <!-- ══════════════════════════════════════════
        ABOUT
-  ============================================================ -->
-  <section class="section section--alt" id="about" aria-label="About">
+  ══════════════════════════════════════════ -->
+  <section class="section section--alt" id="about" aria-label="About Aiden Williams">
     <div class="container">
       <header class="section__header">
         <div class="eyebrow">About</div>
@@ -1251,25 +160,25 @@
 
         <div>
           <p class="skills__label">Tech Stack</p>
-          <div class="skills__cloud">
-            <span class="skill-tag">HTML5</span>
-            <span class="skill-tag">CSS3</span>
-            <span class="skill-tag">JavaScript</span>
-            <span class="skill-tag">WordPress</span>
-            <span class="skill-tag">Git &amp; GitHub</span>
-            <span class="skill-tag">Responsive Design</span>
-            <span class="skill-tag">Systems Admin</span>
+          <div class="skills__cloud" role="list" aria-label="Tech skills">
+            <span class="skill-tag" role="listitem">HTML5</span>
+            <span class="skill-tag" role="listitem">CSS3</span>
+            <span class="skill-tag" role="listitem">JavaScript</span>
+            <span class="skill-tag" role="listitem">WordPress</span>
+            <span class="skill-tag" role="listitem">Git &amp; GitHub</span>
+            <span class="skill-tag" role="listitem">Responsive Design</span>
+            <span class="skill-tag" role="listitem">Systems Admin</span>
           </div>
 
           <p class="skills__label">Currently Learning</p>
-          <div class="skills__cloud">
-            <span class="skill-tag">React.js</span>
-            <span class="skill-tag">Node.js</span>
-            <span class="skill-tag">REST APIs</span>
+          <div class="skills__cloud" role="list" aria-label="Currently learning">
+            <span class="skill-tag" role="listitem">React.js</span>
+            <span class="skill-tag" role="listitem">Node.js</span>
+            <span class="skill-tag" role="listitem">REST APIs</span>
           </div>
 
-          <div class="cert-card">
-            <div class="cert-card__icon">🏅</div>
+          <div class="cert-card" role="region" aria-label="Certification">
+            <div class="cert-card__icon" aria-hidden="true">🏅</div>
             <div>
               <div class="cert-card__title">Software Development — With Merit</div>
               <div class="cert-card__sub">CodeSpace Academy &nbsp;·&nbsp; March 2025 &nbsp;·&nbsp; CERT:1496</div>
@@ -1280,10 +189,10 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       PROJECTS — 3-col desktop / 2-col tablet / 1-col mobile
-  ============================================================ -->
-  <section class="section section--alt" id="projects" aria-label="Projects">
+  <!-- ══════════════════════════════════════════
+       PROJECTS
+  ══════════════════════════════════════════ -->
+  <section class="section" id="projects" aria-label="Projects">
     <div class="container">
       <header class="section__header">
         <div class="eyebrow">Projects</div>
@@ -1294,135 +203,135 @@
       <div class="projects__grid">
 
         <!-- EventCore -->
-        <div class="project-card">
-          <div class="project-card__preview" style="background: linear-gradient(140deg, #04111d 0%, #071d30 100%);">
-            <div style="position:absolute;inset:0;background:radial-gradient(circle at 35% 60%, rgba(0,232,122,.12), transparent 55%);"></div>
+        <article class="project-card">
+          <div class="project-card__preview" style="background:linear-gradient(140deg,#04111d 0%,#071d30 100%);" aria-hidden="true">
+            <div style="position:absolute;inset:0;background:radial-gradient(circle at 35% 60%,rgba(0,232,122,.12),transparent 55%);"></div>
             <div class="project-card__preview-label">EVCORE</div>
             <div class="project-card__emoji">🎪</div>
             <div class="project-card__live"><div class="project-card__live-dot"></div>Live</div>
           </div>
           <div class="project-card__body">
-            <div class="project-card__name">EventCore Solutions</div>
-            <div class="project-card__desc">Professional event staffing platform for South Africa. Connects staffing solutions with event organisers — built and maintained end-to-end.</div>
+            <h3 class="project-card__name">EventCore Solutions</h3>
+            <p class="project-card__desc">Professional event staffing platform for South Africa. Connects staffing solutions with event organisers — built and maintained end-to-end.</p>
             <div class="project-card__footer">
               <span class="tag">React</span>
               <span class="tag">JavaScript</span>
               <span class="tag">CSS</span>
               <div class="project-card__links">
-                <a href="https://eventcoresolutions.co.za" target="_blank" rel="noopener noreferrer" class="icon-btn" title="View live site">🌐</a>
-                <a href="https://github.com/Aiden-Williams19/eventcore" target="_blank" rel="noopener noreferrer" class="icon-btn" title="GitHub">⌥</a>
+                <a href="https://eventcoresolutions.co.za" target="_blank" rel="noopener noreferrer" class="icon-btn" title="View live site" aria-label="EventCore — view live site">🌐</a>
+                <a href="https://github.com/Aiden-Williams19/eventcore" target="_blank" rel="noopener noreferrer" class="icon-btn" title="View on GitHub" aria-label="EventCore — GitHub repository">⌥</a>
               </div>
             </div>
           </div>
-        </div>
+        </article>
 
-        <!-- ListSecure app -->
-        <div class="project-card">
-          <div class="project-card__preview" style="background: linear-gradient(140deg, #030d18 0%, #061528 100%);">
-            <div style="position:absolute;inset:0;background:radial-gradient(circle at 60% 40%, rgba(79,140,255,.12), transparent 55%);"></div>
+        <!-- ListSecure -->
+        <article class="project-card">
+          <div class="project-card__preview" style="background:linear-gradient(140deg,#030d18 0%,#061528 100%);" aria-hidden="true">
+            <div style="position:absolute;inset:0;background:radial-gradient(circle at 60% 40%,rgba(79,140,255,.12),transparent 55%);"></div>
             <div class="project-card__preview-label">LSEC</div>
             <div class="project-card__emoji">🔐</div>
             <div class="project-card__live"><div class="project-card__live-dot"></div>Live</div>
           </div>
           <div class="project-card__body">
-            <div class="project-card__name">ListSecure</div>
-            <div class="project-card__desc">Secure vendor listing and verification platform. Streamlines the process of approving and managing vendors with a clean, reliable interface.</div>
+            <h3 class="project-card__name">ListSecure</h3>
+            <p class="project-card__desc">Secure vendor listing and verification platform. Streamlines the process of approving and managing vendors with a clean, reliable interface.</p>
             <div class="project-card__footer">
               <span class="tag">React</span>
               <span class="tag">JavaScript</span>
               <span class="tag">CSS</span>
               <div class="project-card__links">
-                <a href="https://listsecure.base44.app" target="_blank" rel="noopener noreferrer" class="icon-btn" title="View live site">🌐</a>
-                <a href="https://github.com/Aiden-Williams19/specialized-property-core" target="_blank" rel="noopener noreferrer" class="icon-btn" title="GitHub">⌥</a>
+                <a href="https://listsecure.base44.app" target="_blank" rel="noopener noreferrer" class="icon-btn" title="View live site" aria-label="ListSecure — view live site">🌐</a>
+                <a href="https://github.com/Aiden-Williams19/specialized-property-core" target="_blank" rel="noopener noreferrer" class="icon-btn" title="View on GitHub" aria-label="ListSecure — GitHub repository">⌥</a>
               </div>
             </div>
           </div>
-        </div>
+        </article>
 
         <!-- Waffle Street Eats -->
-        <div class="project-card">
-          <div class="project-card__preview" style="background: linear-gradient(140deg, #1a0c00 0%, #2d1500 100%);">
-            <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(255,160,0,.10), transparent 55%);"></div>
+        <article class="project-card">
+          <div class="project-card__preview" style="background:linear-gradient(140deg,#1a0c00 0%,#2d1500 100%);" aria-hidden="true">
+            <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(255,160,0,.10),transparent 55%);"></div>
             <div class="project-card__preview-label">WFFLE</div>
             <div class="project-card__emoji">🧇</div>
             <div class="project-card__live"><div class="project-card__live-dot"></div>Live</div>
           </div>
           <div class="project-card__body">
-            <div class="project-card__name">Waffle Street Eats</div>
-            <div class="project-card__desc">Food ordering web app for Waffle Street. Customers browse the menu and place orders — built with a warm, inviting UI to match the brand.</div>
+            <h3 class="project-card__name">Waffle Street Eats</h3>
+            <p class="project-card__desc">Food ordering web app for Waffle Street. Customers browse the menu and place orders — built with a warm, inviting UI to match the brand.</p>
             <div class="project-card__footer">
               <span class="tag">React</span>
               <span class="tag">JavaScript</span>
               <span class="tag">CSS</span>
               <div class="project-card__links">
-                <a href="https://waffle-street-eats.base44.app" target="_blank" rel="noopener noreferrer" class="icon-btn" title="View live site">🌐</a>
+                <a href="https://waffle-street-eats.base44.app" target="_blank" rel="noopener noreferrer" class="icon-btn" title="View live site" aria-label="Waffle Street Eats — view live site">🌐</a>
               </div>
             </div>
           </div>
-        </div>
+        </article>
 
-        <!-- Jefe -->
-        <div class="project-card">
-          <div class="project-card__preview" style="background: linear-gradient(140deg, #120c03 0%, #221504 100%);">
-            <div style="position:absolute;inset:0;background:radial-gradient(circle at 70% 35%, rgba(255,185,0,.09), transparent 55%);"></div>
+        <!-- Jefe Website -->
+        <article class="project-card">
+          <div class="project-card__preview" style="background:linear-gradient(140deg,#0e0a00 0%,#1e1600 100%);" aria-hidden="true">
+            <div style="position:absolute;inset:0;background:radial-gradient(circle at 40% 55%,rgba(255,200,50,.08),transparent 55%);"></div>
             <div class="project-card__preview-label">JEFE</div>
             <div class="project-card__emoji">👔</div>
           </div>
           <div class="project-card__body">
-            <div class="project-card__name">Jefe Website</div>
-            <div class="project-card__desc">Polished brand website for Jefe. Modern layout showcasing products and services with full responsive design across all screen sizes.</div>
+            <h3 class="project-card__name">Jefe Website</h3>
+            <p class="project-card__desc">Polished brand website for Jefe. Modern layout showcasing products and services with full responsive design across all screen sizes.</p>
             <div class="project-card__footer">
               <span class="tag">HTML</span>
               <span class="tag">CSS</span>
               <span class="tag">JavaScript</span>
               <div class="project-card__links">
-                <a href="https://github.com/Aiden-Williams19/jefe-website" target="_blank" rel="noopener noreferrer" class="icon-btn" title="GitHub">⌥</a>
+                <a href="https://github.com/Aiden-Williams19/jefe-website" target="_blank" rel="noopener noreferrer" class="icon-btn" title="View on GitHub" aria-label="Jefe Website — GitHub repository">⌥</a>
               </div>
             </div>
           </div>
-        </div>
+        </article>
 
         <!-- For My Brothers -->
-        <div class="project-card">
-          <div class="project-card__preview" style="background: linear-gradient(140deg, #050f07 0%, #091608 100%);">
-            <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(0,232,122,.10), transparent 60%);"></div>
+        <article class="project-card">
+          <div class="project-card__preview" style="background:linear-gradient(140deg,#0a0a14 0%,#111122 100%);" aria-hidden="true">
+            <div style="position:absolute;inset:0;background:radial-gradient(circle at 55% 45%,rgba(100,100,255,.10),transparent 55%);"></div>
             <div class="project-card__preview-label">FMB</div>
             <div class="project-card__emoji">🤝</div>
           </div>
           <div class="project-card__body">
-            <div class="project-card__name">For My Brothers</div>
-            <div class="project-card__desc">Community-driven platform built to connect and support a network of like-minded individuals. Purposeful structure and a strong sense of identity.</div>
+            <h3 class="project-card__name">For My Brothers</h3>
+            <p class="project-card__desc">Community-driven platform built to connect and support a network of like-minded individuals. Purposeful structure and a strong sense of identity.</p>
             <div class="project-card__footer">
               <span class="tag">HTML</span>
               <span class="tag">CSS</span>
               <span class="tag">JavaScript</span>
               <div class="project-card__links">
-                <a href="https://github.com/Aiden-Williams19/formybrothers" target="_blank" rel="noopener noreferrer" class="icon-btn" title="GitHub">⌥</a>
+                <a href="https://github.com/Aiden-Williams19/formybrothers" target="_blank" rel="noopener noreferrer" class="icon-btn" title="View on GitHub" aria-label="For My Brothers — GitHub repository">⌥</a>
               </div>
             </div>
           </div>
-        </div>
+        </article>
 
         <!-- Specialized Property Core -->
-        <div class="project-card">
-          <div class="project-card__preview" style="background: linear-gradient(140deg, #080818 0%, #0d0d2a 100%);">
-            <div style="position:absolute;inset:0;background:radial-gradient(circle at 30% 65%, rgba(79,140,255,.11), transparent 55%);"></div>
+        <article class="project-card">
+          <div class="project-card__preview" style="background:linear-gradient(140deg,#071214 0%,#0d1e22 100%);" aria-hidden="true">
+            <div style="position:absolute;inset:0;background:radial-gradient(circle at 45% 55%,rgba(0,200,180,.08),transparent 55%);"></div>
             <div class="project-card__preview-label">SPC</div>
             <div class="project-card__emoji">🏢</div>
           </div>
           <div class="project-card__body">
-            <div class="project-card__name">Specialized Property Core</div>
-            <div class="project-card__desc">Professional property solutions platform. Structured layout presenting real estate services with trust, clarity, and a client-facing polish.</div>
+            <h3 class="project-card__name">Specialized Property Core</h3>
+            <p class="project-card__desc">Professional property solutions platform. Structured layout presenting real estate services with trust, clarity, and a client-facing polish.</p>
             <div class="project-card__footer">
               <span class="tag">HTML</span>
               <span class="tag">CSS</span>
               <span class="tag">JavaScript</span>
               <div class="project-card__links">
-                <a href="https://github.com/Aiden-Williams19/specialized-property-core" target="_blank" rel="noopener noreferrer" class="icon-btn" title="GitHub">⌥</a>
+                <a href="https://github.com/Aiden-Williams19/specialized-property-core" target="_blank" rel="noopener noreferrer" class="icon-btn" title="View on GitHub" aria-label="Specialized Property Core — GitHub repository">⌥</a>
               </div>
             </div>
           </div>
-        </div>
+        </article>
 
       </div><!-- /projects__grid -->
 
@@ -1434,20 +343,19 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       DEVELOPMENT WORKFLOW
-  ============================================================ -->
-  <section class="section" id="workflow" aria-label="Development Workflow">
+  <!-- ══════════════════════════════════════════
+       WORKFLOW
+  ══════════════════════════════════════════ -->
+  <section class="section section--alt" id="workflow" aria-label="Development workflow">
     <div class="container">
-
       <header class="section__header">
         <div class="eyebrow">Development Workflow</div>
         <h2 class="section__title">How I build<br>modern apps.</h2>
       </header>
 
-      <!-- Banner quote -->
-      <div class="workflow__banner">
-        <div class="workflow__banner-icon">⚡</div>
+      <!-- Banner -->
+      <div class="workflow__banner" role="note">
+        <div class="workflow__banner-icon" aria-hidden="true">⚡</div>
         <p class="workflow__banner-text">
           I leverage <strong>AI-assisted development tools</strong> alongside traditional programming
           to prototype, debug, and ship production-ready web applications efficiently.
@@ -1456,51 +364,48 @@
         </p>
       </div>
 
-      <!-- Top row: AI Tools + Platforms -->
+      <!-- Top grid: AI Tools + Platforms -->
       <div class="workflow__top">
 
-        <!-- AI-Assisted Development -->
-        <div class="tool-group">
+        <!-- AI Tools -->
+        <div class="tool-group" role="region" aria-label="AI development tools">
           <div class="tool-group__label">AI-Assisted Development</div>
           <div class="tool-tags">
-
             <div class="tool-tag">
-              <div class="tool-tag__icon">⌨</div>
+              <div class="tool-tag__icon" aria-hidden="true">⌨</div>
               Cursor AI
             </div>
-
             <div class="tool-tag">
-              <div class="tool-tag__icon">✦</div>
+              <div class="tool-tag__icon" aria-hidden="true">✦</div>
               Claude AI
             </div>
-
           </div>
         </div>
 
-        <!-- Rapid Development Platforms -->
-        <div class="tool-group">
+        <!-- Platforms -->
+        <div class="tool-group" role="region" aria-label="Rapid development platforms">
           <div class="tool-group__label">Rapid Development Platforms</div>
-
           <div class="platform-card">
-            <div class="platform-card__icon">🔷</div>
+            <div class="platform-card__icon" aria-hidden="true">🔷</div>
             <div>
               <div class="platform-card__name">Base44</div>
               <div class="platform-card__desc">Full-stack rapid deployment platform — prototype to production in hours</div>
             </div>
           </div>
-
         </div>
+
       </div><!-- /workflow__top -->
 
-      <!-- Base44 Projects -->
+      <!-- Base44 projects -->
       <div class="workflow__projects-label">Projects Built on Base44</div>
 
       <div class="workflow__cards">
 
-        <!-- Waffle Street Eats -->
-        <div class="workflow-card">
-          <div class="workflow-card__preview" style="background: linear-gradient(140deg, #1a0c00 0%, #2d1500 100%);">
-            <div class="workflow-card__preview-bg" style="background: radial-gradient(circle at 50% 50%, rgba(255,160,0,.12), transparent 60%);"></div>
+        <!-- Waffle Street -->
+        <article class="workflow-card">
+          <div class="workflow-card__preview">
+            <div class="workflow-card__preview-bg" style="background:linear-gradient(140deg,#1a0c00 0%,#2d1500 100%);"></div>
+            <div class="workflow-card__preview-bg" style="position:absolute;inset:0;background:radial-gradient(circle at 50% 55%,rgba(255,160,0,.10),transparent 55%);"></div>
             <div class="workflow-card__preview-label">WFFLE</div>
             <div class="workflow-card__emoji">🧇</div>
             <div class="workflow-card__badges">
@@ -1509,25 +414,24 @@
             </div>
           </div>
           <div class="workflow-card__body">
-            <div class="workflow-card__name">Waffle Street Eats</div>
-            <div class="workflow-card__desc">
-              Food ordering web app for Waffle Street. Built rapidly on Base44 — customers browse the full menu and place orders through a warm, branded UI. Shipped to production with no backend setup.
-            </div>
+            <h3 class="workflow-card__name">Waffle Street Eats</h3>
+            <p class="workflow-card__desc">Food ordering web app for Waffle Street. Built rapidly on Base44 — customers browse the full menu and place orders through a warm, branded UI. Shipped to production with no backend setup.</p>
             <div class="workflow-card__footer">
               <span class="tag">React</span>
               <span class="tag">Base44</span>
               <span class="tag">AI-Assisted</span>
-              <div class="project-card__links" style="margin-left:auto;">
-                <a href="https://waffle-street-eats.base44.app" target="_blank" rel="noopener noreferrer" class="icon-btn" title="View live site">🌐</a>
+              <div style="margin-left:auto;display:flex;gap:6px;">
+                <a href="https://waffle-street-eats.base44.app" target="_blank" rel="noopener noreferrer" class="icon-btn" title="View live site" aria-label="Waffle Street Eats — view live site">🌐</a>
               </div>
             </div>
           </div>
-        </div>
+        </article>
 
         <!-- ListSecure -->
-        <div class="workflow-card">
-          <div class="workflow-card__preview" style="background: linear-gradient(140deg, #030d18 0%, #061528 100%);">
-            <div class="workflow-card__preview-bg" style="background: radial-gradient(circle at 60% 40%, rgba(79,140,255,.12), transparent 55%);"></div>
+        <article class="workflow-card">
+          <div class="workflow-card__preview">
+            <div class="workflow-card__preview-bg" style="background:linear-gradient(140deg,#030d18 0%,#061528 100%);"></div>
+            <div class="workflow-card__preview-bg" style="position:absolute;inset:0;background:radial-gradient(circle at 60% 40%,rgba(79,140,255,.12),transparent 55%);"></div>
             <div class="workflow-card__preview-label">LSEC</div>
             <div class="workflow-card__emoji">🔐</div>
             <div class="workflow-card__badges">
@@ -1536,29 +440,27 @@
             </div>
           </div>
           <div class="workflow-card__body">
-            <div class="workflow-card__name">ListSecure</div>
-            <div class="workflow-card__desc">
-              Secure vendor listing and verification platform. Built and deployed on Base44 — streamlines vendor approval, verification workflows, and admin operations in a clean, reliable interface.
-            </div>
+            <h3 class="workflow-card__name">ListSecure</h3>
+            <p class="workflow-card__desc">Secure vendor listing and verification platform. Built and deployed on Base44 — streamlines vendor approval, verification workflows, and admin operations in a clean, reliable interface.</p>
             <div class="workflow-card__footer">
               <span class="tag">React</span>
               <span class="tag">Base44</span>
               <span class="tag">AI-Assisted</span>
-              <div class="project-card__links" style="margin-left:auto;">
-                <a href="https://listsecure.base44.app" target="_blank" rel="noopener noreferrer" class="icon-btn" title="View live site">🌐</a>
+              <div style="margin-left:auto;display:flex;gap:6px;">
+                <a href="https://listsecure.base44.app" target="_blank" rel="noopener noreferrer" class="icon-btn" title="View live site" aria-label="ListSecure — view live site">🌐</a>
               </div>
             </div>
           </div>
-        </div>
+        </article>
 
       </div><!-- /workflow__cards -->
 
     </div>
   </section>
 
-  <!-- ============================================================
+  <!-- ══════════════════════════════════════════
        CONTACT
-  ============================================================ -->
+  ══════════════════════════════════════════ -->
   <section class="section" id="contact" aria-label="Contact">
     <div class="container">
       <header class="section__header">
@@ -1572,29 +474,29 @@
           I typically respond within 24 hours.
         </p>
         <div class="contact__grid">
-          <a href="mailto:aidenwilliams336@gmail.com" class="contact-link">
-            <div class="contact-link__icon">✉</div>
+          <a href="mailto:aidenwilliams336@gmail.com" class="contact-link" aria-label="Email Aiden Williams">
+            <div class="contact-link__icon" aria-hidden="true">✉</div>
             <div class="contact-link__meta">
               <span class="contact-link__label">Email</span>
               <span class="contact-link__value">aidenwilliams336@gmail.com</span>
             </div>
           </a>
-          <a href="tel:+27672089491" class="contact-link">
-            <div class="contact-link__icon">📞</div>
+          <a href="tel:+27672089491" class="contact-link" aria-label="Call Aiden Williams">
+            <div class="contact-link__icon" aria-hidden="true">📞</div>
             <div class="contact-link__meta">
               <span class="contact-link__label">Phone</span>
               <span class="contact-link__value">067 208 9491</span>
             </div>
           </a>
-          <a href="https://github.com/Aiden-Williams19" target="_blank" rel="noopener noreferrer" class="contact-link">
-            <div class="contact-link__icon" style="font-size:.8rem;font-weight:900;font-family:'Cabinet Grotesk',sans-serif;">GH</div>
+          <a href="https://github.com/Aiden-Williams19" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="Aiden Williams on GitHub">
+            <div class="contact-link__icon" style="font-size:.8rem;font-weight:900;font-family:'Cabinet Grotesk',sans-serif;" aria-hidden="true">GH</div>
             <div class="contact-link__meta">
               <span class="contact-link__label">GitHub</span>
               <span class="contact-link__value">Aiden-Williams19</span>
             </div>
           </a>
-          <a href="https://www.linkedin.com/in/aiden-williams-739660377" target="_blank" rel="noopener noreferrer" class="contact-link">
-            <div class="contact-link__icon" style="font-size:.85rem;font-weight:800;font-family:'Cabinet Grotesk',sans-serif;">in</div>
+          <a href="https://www.linkedin.com/in/aiden-williams-739660377" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="Aiden Williams on LinkedIn">
+            <div class="contact-link__icon" style="font-size:.85rem;font-weight:800;font-family:'Cabinet Grotesk',sans-serif;" aria-hidden="true">in</div>
             <div class="contact-link__meta">
               <span class="contact-link__label">LinkedIn</span>
               <span class="contact-link__value">Aiden Williams</span>
@@ -1605,247 +507,195 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       SERVICES & PAYMENT
-  ============================================================ -->
-  <section class="section" id="services" aria-label="Services & Payment">
+  <!-- ══════════════════════════════════════════
+       SERVICES & PRICING
+  ══════════════════════════════════════════ -->
+  <section class="section section--alt" id="services" aria-label="Services and pricing">
     <div class="container">
-      <div class="section__header">
+      <header class="section__header">
         <div class="eyebrow">Services</div>
-        <h2 class="section__title">Hire me for your project.</h2>
+        <h2 class="section__title">Hire me for<br>your project.</h2>
         <p class="section__sub">Pick a package, pay securely via card, EFT, or SnapScan — and let's get building.</p>
-      </div>
+      </header>
 
       <div class="services__grid">
 
-        <!-- BASIC -->
-        <div class="service-card" data-plan="starter">
+        <!-- STARTER -->
+        <article class="service-card" aria-label="Landing Page package">
           <div class="service-card__badge">Starter</div>
           <div class="service-card__price">R<span>5</span></div>
           <div class="service-card__name">Landing Page</div>
-          <ul class="service-card__features">
-            <li>✓ Single-page responsive site</li>
-            <li>✓ Mobile-first design</li>
-            <li>✓ Contact form</li>
-            <li>✓ 3-day delivery</li>
+          <ul class="service-card__features" aria-label="Included features">
+            <li>Single-page responsive site</li>
+            <li>Mobile-first design</li>
+            <li>Contact form</li>
+            <li>3-day delivery</li>
           </ul>
-          <button class="service-card__btn" onclick="openPayment('Landing Page', 500)">Pay R5 →</button>
-        </div>
+          <button class="service-card__btn" onclick="openPayment('Landing Page', 500)" aria-label="Pay R5 for Landing Page">
+            Pay R5 →
+          </button>
+        </article>
 
-        <!-- PRO -->
-        <div class="service-card service-card--featured" data-plan="pro">
+        <!-- PRO (featured) -->
+        <article class="service-card service-card--featured" aria-label="Full Website package — most popular">
           <div class="service-card__badge service-card__badge--featured">Most Popular</div>
           <div class="service-card__price">R<span>7</span></div>
           <div class="service-card__name">Full Website</div>
-          <ul class="service-card__features">
-            <li>✓ Multi-page website</li>
-            <li>✓ Custom UI design</li>
-            <li>✓ CMS integration</li>
-            <li>✓ SEO basics</li>
-            <li>✓ 7-day delivery</li>
+          <ul class="service-card__features" aria-label="Included features">
+            <li>Multi-page website</li>
+            <li>Custom UI design</li>
+            <li>CMS integration</li>
+            <li>SEO basics</li>
+            <li>7-day delivery</li>
           </ul>
-          <button class="service-card__btn service-card__btn--featured" onclick="openPayment('Full Website', 700)">Pay R7 →</button>
-        </div>
+          <button class="service-card__btn service-card__btn--featured" onclick="openPayment('Full Website', 700)" aria-label="Pay R7 for Full Website">
+            Pay R7 →
+          </button>
+        </article>
 
         <!-- WEB APP -->
-        <div class="service-card" data-plan="webapp">
+        <article class="service-card" aria-label="Web Application package">
           <div class="service-card__badge">Advanced</div>
           <div class="service-card__price">R<span>9</span></div>
           <div class="service-card__name">Web Application</div>
-          <ul class="service-card__features">
-            <li>✓ React / dynamic app</li>
-            <li>✓ API integrations</li>
-            <li>✓ Auth & user accounts</li>
-            <li>✓ Dashboard / admin panel</li>
-            <li>✓ 14-day delivery</li>
+          <ul class="service-card__features" aria-label="Included features">
+            <li>React / dynamic app</li>
+            <li>API integrations</li>
+            <li>Auth &amp; user accounts</li>
+            <li>Dashboard / admin panel</li>
+            <li>14-day delivery</li>
           </ul>
-          <button class="service-card__btn" onclick="openPayment('Web Application', 900)">Pay R9 →</button>
-        </div>
+          <button class="service-card__btn" onclick="openPayment('Web Application', 900)" aria-label="Pay R9 for Web Application">
+            Pay R9 →
+          </button>
+        </article>
 
         <!-- CUSTOM -->
-        <div class="service-card service-card--custom" data-plan="custom">
+        <article class="service-card service-card--custom" aria-label="Custom quote — enter your own amount">
           <div class="service-card__badge">Custom</div>
           <div class="service-card__price">R<span>?</span></div>
           <div class="service-card__name">Custom Quote</div>
-          <ul class="service-card__features">
-            <li>✓ Tailored scope</li>
-            <li>✓ Enterprise projects</li>
-            <li>✓ Ongoing retainer</li>
-            <li>✓ Priority support</li>
+          <ul class="service-card__features" aria-label="Included features">
+            <li>Tailored scope</li>
+            <li>Enterprise projects</li>
+            <li>Ongoing retainer</li>
+            <li>Priority support</li>
           </ul>
-          <button class="service-card__btn" onclick="openCustomPayment()">Enter amount →</button>
-        </div>
+          <button class="service-card__btn" onclick="openCustomPayment()" aria-label="Enter custom payment amount">
+            Enter amount →
+          </button>
+        </article>
 
       </div><!-- /services__grid -->
     </div>
   </section>
 
-  <!-- ============================================================
+  <!-- ══════════════════════════════════════════
        PAYMENT MODAL
-  ============================================================ -->
-  <div class="pay-overlay" id="payOverlay" role="dialog" aria-modal="true" aria-labelledby="payTitle">
-    <div class="pay-modal">
+  ══════════════════════════════════════════ -->
+  <div class="pay-overlay" id="payOverlay" role="dialog" aria-modal="true" aria-labelledby="payModalTitle">
+
+    <div class="pay-modal" role="document">
       <button class="pay-modal__close" onclick="closePayment()" aria-label="Close payment modal">✕</button>
 
       <div class="pay-modal__header">
-        <div class="pay-modal__icon">💳</div>
-        <h3 class="pay-modal__title" id="payTitle">Complete Payment</h3>
-        <p class="pay-modal__plan" id="payPlan"></p>
-        <div class="pay-modal__amount" id="payAmount"></div>
+        <div class="pay-modal__badge" id="payBadge">Service</div>
+        <h2 class="pay-modal__title" id="payModalTitle">Complete Payment</h2>
+        <div class="pay-modal__amount" id="payAmount" aria-live="polite"></div>
+        <div class="pay-modal__amount-note" id="payAmountNote"></div>
       </div>
 
-      <!-- Custom amount (shown only for custom plan) -->
-      <div class="pay-field" id="customAmountField" style="display:none;">
-        <label class="pay-label">Amount (ZAR)</label>
-        <div class="pay-input-wrap">
-          <span class="pay-prefix">R</span>
-          <input type="number" id="customAmountInput" class="pay-input pay-input--prefixed" placeholder="e.g. 2500" min="100">
+      <div class="pay-divider"></div>
+
+      <!-- Custom amount (hidden unless custom plan) -->
+      <div class="form-field" id="customAmountField" style="display:none;">
+        <label class="form-label" for="customAmountInput">
+          Amount (ZAR) <span class="req" aria-hidden="true">*</span>
+        </label>
+        <div class="form-input-wrap">
+          <span class="form-input-prefix" aria-hidden="true">R</span>
+          <input
+            type="number"
+            id="customAmountInput"
+            class="form-input form-input--prefixed"
+            placeholder="e.g. 2500"
+            min="5"
+            step="1"
+            autocomplete="off"
+            aria-describedby="customAmountError"
+          />
         </div>
+        <div class="form-error" id="customAmountError" role="alert"></div>
       </div>
 
-      <div class="pay-field">
-        <label class="pay-label">Your Name</label>
-        <input type="text" id="payName" class="pay-input" placeholder="Aiden Williams">
-      </div>
-      <div class="pay-field">
-        <label class="pay-label">Email Address</label>
-        <input type="email" id="payEmail" class="pay-input" placeholder="you@example.com">
-      </div>
-
-      <div class="pay-methods">
-        <div class="pay-methods__label">Pay via</div>
-        <div class="pay-methods__options">
-          <button class="pay-method active" data-method="card" onclick="selectMethod(this)">💳 Card</button>
-          <button class="pay-method" data-method="bank_transfer" onclick="selectMethod(this)">🏦 EFT</button>
-          <button class="pay-method" data-method="qr" onclick="selectMethod(this)">📱 SnapScan</button>
-          <button class="pay-method" data-method="ussd" onclick="selectMethod(this)">📟 USSD</button>
-        </div>
+      <!-- Name -->
+      <div class="form-field">
+        <label class="form-label" for="payName">
+          Full Name <span class="req" aria-hidden="true">*</span>
+        </label>
+        <input
+          type="text"
+          id="payName"
+          class="form-input"
+          placeholder="Your full name"
+          autocomplete="name"
+          aria-describedby="payNameError"
+          required
+        />
+        <div class="form-error" id="payNameError" role="alert"></div>
       </div>
 
-      <button class="pay-submit" id="paySubmit" onclick="submitPayment()">
-        <span id="paySubmitLabel">Pay Now →</span>
-        <span id="paySubmitSpinner" style="display:none;">Processing…</span>
+      <!-- Email -->
+      <div class="form-field">
+        <label class="form-label" for="payEmail">
+          Email Address <span class="req" aria-hidden="true">*</span>
+        </label>
+        <input
+          type="email"
+          id="payEmail"
+          class="form-input"
+          placeholder="you@example.com"
+          autocomplete="email"
+          aria-describedby="payEmailError"
+          required
+        />
+        <div class="form-error" id="payEmailError" role="alert"></div>
+      </div>
+
+      <!-- Payment methods -->
+      <div class="pay-divider"></div>
+      <div class="pay-methods__label" id="payMethodsLabel">Pay via</div>
+      <div class="pay-methods__grid" role="group" aria-labelledby="payMethodsLabel">
+        <button class="pay-method-btn active" data-method="card" onclick="selectMethod(this)" aria-pressed="true" aria-label="Pay by card">
+          <span class="pay-method-btn__icon">💳</span> Card
+        </button>
+        <button class="pay-method-btn" data-method="bank_transfer" onclick="selectMethod(this)" aria-pressed="false" aria-label="Pay by EFT bank transfer">
+          <span class="pay-method-btn__icon">🏦</span> EFT
+        </button>
+        <button class="pay-method-btn" data-method="qr" onclick="selectMethod(this)" aria-pressed="false" aria-label="Pay by SnapScan QR code">
+          <span class="pay-method-btn__icon">📱</span> SnapScan
+        </button>
+        <button class="pay-method-btn" data-method="ussd" onclick="selectMethod(this)" aria-pressed="false" aria-label="Pay by USSD">
+          <span class="pay-method-btn__icon">📟</span> USSD
+        </button>
+      </div>
+
+      <!-- Submit -->
+      <button class="pay-submit" id="paySubmit" onclick="submitPayment()" aria-label="Confirm and pay now">
+        <span class="pay-submit__spinner" aria-hidden="true"></span>
+        <span class="pay-submit__label">Pay Now →</span>
       </button>
 
-      <p class="pay-secure">🔒 Secured by <strong>Paystack</strong> — PCI-DSS compliant</p>
-    </div>
-  </div>
+      <p class="pay-secure" aria-label="Secured by Paystack — PCI-DSS compliant">
+        Secured by <strong>Paystack</strong> — PCI-DSS compliant
+      </p>
 
-  <!-- Paystack SDK -->
-  <script src="https://js.paystack.co/v1/inline.js"></script>
-  <script>
-    /* ── Payment state ── */
-    let _payAmount   = 0;   // in kobo/cents
-    let _payPlan     = '';
-    let _isCustom    = false;
-    let _selectedMethod = 'card';
+    </div><!-- /pay-modal -->
+  </div><!-- /pay-overlay -->
 
-    const PAYSTACK_PK = 'pk_test_5f706f00affbada9fe98f82a0b73ad3eac77d4e8';
-
-    function openPayment(planName, amountKobo) {
-      _payPlan    = planName;
-      _payAmount  = amountKobo;
-      _isCustom   = false;
-
-      document.getElementById('payPlan').textContent   = planName;
-      document.getElementById('payAmount').textContent = 'R ' + (amountKobo / 100).toLocaleString('en-ZA', {minimumFractionDigits:0});
-      document.getElementById('customAmountField').style.display = 'none';
-      document.getElementById('payOverlay').classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function openCustomPayment() {
-      _isCustom  = true;
-      _payPlan   = 'Custom Project';
-      _payAmount = 0;
-
-      document.getElementById('payPlan').textContent   = 'Custom Project';
-      document.getElementById('payAmount').textContent = '';
-      document.getElementById('customAmountField').style.display = 'block';
-      document.getElementById('payOverlay').classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closePayment() {
-      document.getElementById('payOverlay').classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    function selectMethod(el) {
-      document.querySelectorAll('.pay-method').forEach(b => b.classList.remove('active'));
-      el.classList.add('active');
-      _selectedMethod = el.dataset.method;
-    }
-
-    function submitPayment() {
-      const name  = document.getElementById('payName').value.trim();
-      const email = document.getElementById('payEmail').value.trim();
-
-      if (_isCustom) {
-        const raw = parseFloat(document.getElementById('customAmountInput').value);
-        if (!raw || raw < 100) { alert('Please enter a valid amount (minimum R100).'); return; }
-        _payAmount = Math.round(raw * 100);
-        document.getElementById('payAmount').textContent = 'R ' + raw.toLocaleString('en-ZA');
-      }
-
-      if (!name)  { alert('Please enter your name.'); return; }
-      if (!email || !/\S+@\S+\.\S+/.test(email)) { alert('Please enter a valid email.'); return; }
-
-      const btn    = document.getElementById('paySubmit');
-      const label  = document.getElementById('paySubmitLabel');
-      const spinner = document.getElementById('paySubmitSpinner');
-      btn.disabled = true;
-      label.style.display  = 'none';
-      spinner.style.display = 'inline';
-
-      const handler = PaystackPop.setup({
-        key:       PAYSTACK_PK,
-        email:     email,
-        amount:    _payAmount,
-        currency:  'ZAR',
-        ref:       'AW-' + Date.now(),
-        label:     name,
-        channels:  [_selectedMethod === 'card' ? 'card' : _selectedMethod === 'bank_transfer' ? 'bank_transfer' : _selectedMethod === 'qr' ? 'qr' : 'ussd'],
-        metadata: {
-          custom_fields: [
-            { display_name: 'Service', variable_name: 'service', value: _payPlan },
-            { display_name: 'Client Name', variable_name: 'client_name', value: name }
-          ]
-        },
-        onClose: function() {
-          btn.disabled = false;
-          label.style.display  = 'inline';
-          spinner.style.display = 'none';
-        },
-        callback: function(response) {
-          btn.disabled = false;
-          label.style.display  = 'inline';
-          spinner.style.display = 'none';
-          closePayment();
-          showSuccessToast(name, _payPlan, response.reference);
-        }
-      });
-      handler.openIframe();
-    }
-
-    function showSuccessToast(name, plan, ref) {
-      const t = document.createElement('div');
-      t.className = 'pay-toast';
-      t.innerHTML = `<strong>Payment received!</strong><br>Thanks ${name} — <em>${plan}</em> is confirmed.<br><small>Ref: ${ref}</small>`;
-      document.body.appendChild(t);
-      requestAnimationFrame(() => t.classList.add('show'));
-      setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, 6000);
-    }
-
-    /* Close overlay on backdrop click */
-    document.getElementById('payOverlay').addEventListener('click', function(e) {
-      if (e.target === this) closePayment();
-    });
-  </script>
-
-  <!-- ============================================================
+  <!-- ══════════════════════════════════════════
        FOOTER
-  ============================================================ -->
+  ══════════════════════════════════════════ -->
   <footer class="footer" role="contentinfo">
     <div class="container footer__inner">
       <div class="footer__logo">[AW<span>.</span>dev]</div>
@@ -1854,51 +704,11 @@
     </div>
   </footer>
 
-  <!-- ============================================================
-       JAVASCRIPT
-  ============================================================ -->
-  <script>
-    /* ── 1. Theme toggle ── */
-    const themeBtn  = document.getElementById('themeBtn');
-    const htmlEl    = document.documentElement;
-    let   isDark    = true;
+  <!-- Paystack SDK -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
 
-    themeBtn.addEventListener('click', () => {
-      isDark = !isDark;
-      htmlEl.setAttribute('data-theme', isDark ? 'dark' : 'light');
-      themeBtn.textContent = isDark ? '🌙' : '☀️';
-    });
+  <!-- Site script -->
+  <script src="script.js"></script>
 
-    /* ── 2. Scroll-reveal experience cards ── */
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('visible'), i * 100);
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.exp-card').forEach(el => revealObserver.observe(el));
-
-    /* ── 3. Active nav highlight ── */
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.navbar__links a');
-
-    const navObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          // remove active from all links
-          navLinks.forEach(a => a.classList.remove('active'));
-          // find the corresponding link and add active
-          const id = entry.target.id;
-          const link = document.querySelector(`.navbar__links a[href="#${id}"]`);
-          if (link) link.classList.add('active');
-        }
-      });
-    }, { threshold: 0.5 });
-
-    sections.forEach(section => navObserver.observe(section));
-  </script>
-  </body>
-  </html>
+</body>
+</html>
